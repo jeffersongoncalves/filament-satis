@@ -1,9 +1,5 @@
 # Filament Satis
 
-[![Latest Version](https://img.shields.io/packagist/v/jeffersongoncalves/filament-satis.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-satis)
-[![PHP Version](https://img.shields.io/packagist/php-v/jeffersongoncalves/filament-satis.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-satis)
-[![License](https://img.shields.io/packagist/l/jeffersongoncalves/filament-satis.svg?style=flat-square)](LICENSE.md)
-
 A [Filament](https://filamentphp.com) plugin for managing private Composer repositories powered by [Satis](https://github.com/composer/satis).
 
 ## Features
@@ -26,46 +22,34 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 
 ## Installation
 
-This package is distributed via [Privato](https://privato.pub). After purchasing a license, add the repository to your `composer.json`:
+This package is distributed via [Privato](https://privato.pub). After purchasing a license, follow these steps:
 
-```json
-{
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://privato.pub"
-        }
-    ]
-}
+**1. Configure the Composer repository:**
+
+```bash
+composer config repositories.jeffersongoncalves composer https://jsg-tecnologia.privato.pub/composer
 ```
 
-Authenticate with your license key in `auth.json`:
+**2. Authenticate with Privato:**
 
-```json
-{
-    "http-basic": {
-        "privato.pub": {
-            "username": "your-email@example.com",
-            "password": "your-license-key"
-        }
-    }
-}
+```bash
+composer config --auth http-basic.jsg-tecnologia.privato.pub "<EMAIL>" "<KEY>"
 ```
 
-Then install:
+**3. Require the package:**
 
 ```bash
 composer require jeffersongoncalves/filament-satis
 ```
 
-Publish and run migrations:
+**4. Publish and run migrations:**
 
 ```bash
 php artisan vendor:publish --tag="filament-satis-migrations"
 php artisan migrate
 ```
 
-Publish the config (optional):
+**5. Publish the config (optional):**
 
 ```bash
 php artisan vendor:publish --tag="filament-satis-config"

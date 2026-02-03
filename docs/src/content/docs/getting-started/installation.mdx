@@ -5,43 +5,27 @@ description: Purchase a license and install Filament Satis via Composer.
 
 ## Purchase a License
 
-Filament Satis is distributed through [Privato](https://privato.pub). Visit the product page, purchase a license, and note your **license key**.
+Filament Satis is distributed through [Privato](https://privato.pub). Visit the product page, purchase a license, and note your **email** and **license key**.
 
-## Add the Privato Repository
+## Configure the Composer Repository
 
-Add Privato as a Composer repository in your project's `composer.json`:
-
-```json
-{
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://privato.pub"
-    }
-  ]
-}
+```bash
+composer config repositories.jeffersongoncalves composer https://jsg-tecnologia.privato.pub/composer
 ```
 
-## Authenticate
+## Authenticate with Privato
 
-Create or update `auth.json` in your project root (or globally at `~/.composer/auth.json`):
-
-```json
-{
-  "http-basic": {
-    "privato.pub": {
-      "username": "your-email@example.com",
-      "password": "your-license-key"
-    }
-  }
-}
+```bash
+composer config --auth http-basic.jsg-tecnologia.privato.pub "<EMAIL>" "<KEY>"
 ```
+
+Replace `<EMAIL>` with the email used to purchase the license and `<KEY>` with your license key.
 
 :::caution
 Never commit `auth.json` to version control. Add it to your `.gitignore`.
 :::
 
-## Install the Package
+## Require the Package
 
 ```bash
 composer require jeffersongoncalves/filament-satis

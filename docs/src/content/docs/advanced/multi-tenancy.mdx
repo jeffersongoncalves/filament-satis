@@ -39,6 +39,47 @@ All models that use the `HasTenancy` trait are affected:
 - `PackageDownload`
 - `Dependency`
 
+## Tenant-Scoped Routes
+
+When tenancy is enabled, all Composer-facing routes include the `{tenant}` ID in the URL. This ensures that each request is explicitly bound to a tenant, and the middleware validates that the token belongs to that tenant before serving any data.
+
+**Without tenancy:**
+
+```
+GET /satis/packages.json
+GET /satis/p2/{vendor}/{package}.json
+GET /satis/archives/{vendor}/{package}/{file}
+POST /api/satis/composer/downloads
+```
+
+**With tenancy enabled:**
+
+```
+GET /satis/{tenant}/packages.json
+GET /satis/{tenant}/p2/{vendor}/{package}.json
+GET /satis/{tenant}/archives/{vendor}/{package}/{file}
+POST /api/satis/{tenant}/composer/downloads
+```
+
+The `EnsureUserHasLicense` middleware validates that the authenticated token's tenant foreign key matches the `{tenant}` parameter in the URL. If there is a mismatch, a `403 Forbidden` response is returned.
+
+### Client Configuration
+
+When tenancy is enabled, clients must include the tenant ID in their repository URL:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://your-app.com/satis/1"
+    }
+  ]
+}
+```
+
+Where `1` is the tenant ID for that client's organization.
+
 ## Build Isolation
 
 Builds are also tenant-isolated. The storage structure becomes:

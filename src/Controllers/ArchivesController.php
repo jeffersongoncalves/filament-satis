@@ -29,7 +29,7 @@ class ArchivesController extends Controller
         $disk = Storage::disk(config('filament-satis.storage_disk'));
         $storagePath = config('filament-satis.storage_path', 'satis');
 
-        $tenantPrefix = $this->getTenantPrefix($token);
+        $tenantPrefix = $this->getTenantPrefix($request, $token);
         $buildPath = $storagePath.'/'.$tenantPrefix.$token->id;
         $archivePath = $buildPath.'/archives/'.$vendor.'/'.$package.'/'.$file;
 
@@ -40,10 +40,16 @@ class ArchivesController extends Controller
         return response()->file($disk->path($archivePath));
     }
 
-    protected function getTenantPrefix($token): string
+    protected function getTenantPrefix(Request $request, $token): string
     {
         if (! config('filament-satis.tenancy.enabled')) {
             return '';
+        }
+
+        $tenantId = $request->route('tenant');
+
+        if ($tenantId) {
+            return $tenantId.'/';
         }
 
         $fk = config('filament-satis.tenancy.foreign_key');

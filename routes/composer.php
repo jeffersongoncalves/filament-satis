@@ -10,6 +10,10 @@ use JeffersonGoncalves\FilamentSatis\Middleware\EnsureUserHasLicense;
 $prefix = config('filament-satis.routes.composer_prefix', 'satis');
 $middleware = config('filament-satis.routes.middleware', ['api']);
 
+if (config('filament-satis.tenancy.enabled')) {
+    $prefix .= '/{tenant}';
+}
+
 Route::prefix($prefix)
     ->middleware([...$middleware, EnsureUserHasLicense::class])
     ->group(function () {

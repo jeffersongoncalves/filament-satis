@@ -7,6 +7,10 @@ These endpoints implement the [Composer Repository API](https://getcomposer.org/
 
 All Composer endpoints require authentication via the `EnsureUserHasLicense` middleware using HTTP Basic Auth or Bearer tokens.
 
+:::note
+When [multi-tenancy](/advanced/multi-tenancy/) is enabled, all routes include a `{tenant}` segment after the prefix (e.g. `/satis/{tenant}/packages.json`). The middleware validates that the token belongs to the specified tenant, returning `403 Forbidden` on mismatch.
+:::
+
 ## Packages Index
 
 ```http
@@ -126,9 +130,13 @@ All endpoints authenticate using the `satis-token` guard:
 
 Failed authentication returns `401 Unauthorized`.
 
+When multi-tenancy is enabled, the middleware additionally checks that the token's tenant foreign key matches the `{tenant}` route parameter. A mismatch returns `403 Forbidden`.
+
 ## Default Prefixes
 
 | Config Key | Default | Used By |
 |------------|---------|---------|
 | `composer_prefix` | `satis` | Package/include/archive routes |
 | `api_prefix` | `api/satis` | Download tracking, webhooks |
+
+With tenancy enabled, routes become `/{prefix}/{tenant}/...`.

@@ -20,6 +20,13 @@ class EnsureUserHasLicense
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        if (! $this->validateTenantAccess($request, $token)) {
+            return response()->json([
+                'error' => 'Forbidden',
+                'message' => 'Token does not belong to this tenant.',
+            ], Response::HTTP_FORBIDDEN);
+        }
+
         $request->attributes->set('satis_token', $token);
 
         return $next($request);
@@ -46,5 +53,22 @@ class EnsureUserHasLicense
         }
 
         return null;
+    }
+
+    protected function validateTenantAccess(Request $request, $token): bool
+    {
+        if (! config('filament-satis.tenancy.enabled')) {
+            return true;
+        }
+
+        $tenantId = $request->route('tenant');
+
+        if (! $tenantId) {
+            return true;
+        }
+
+        $fk = config('filament-satis.tenancy.foreign_key');
+
+        return $token->{$fk} == $tenantId;
     }
 }
