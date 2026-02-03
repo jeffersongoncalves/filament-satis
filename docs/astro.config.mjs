@@ -9,9 +9,7 @@ export default defineConfig({
         src: './src/assets/logo.svg',
         replacesTitle: false,
       },
-      social: {
-        github: 'https://github.com/jeffersongoncalves/filament-satis',
-      },
+      social: {},
       sidebar: [
         {
           label: 'Getting Started',
