@@ -5,31 +5,57 @@ description: Purchase a license and install Filament Satis via Composer.
 
 ## Purchase a License
 
-Filament Satis is distributed through [Privato](https://privato.pub). Visit the product page, purchase a license, and note your **email** and **license key**.
+Filament Satis is distributed through [Anystack](https://checkout.anystack.sh/filament-satis). Visit the product page, purchase a license, and note your **email** and **license key**.
 
-## Configure the Composer Repository
+## Add the Private Registry
 
-```bash
-composer config repositories.jeffersongoncalves composer https://jsg-tecnologia.privato.pub/composer
+Add the Anystack Composer registry to your project's `composer.json`:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://filament-satis.composer.sh"
+    }
+  ]
+}
 ```
-
-## Authenticate with Privato
-
-```bash
-composer config --auth http-basic.jsg-tecnologia.privato.pub "<EMAIL>" "<KEY>"
-```
-
-Replace `<EMAIL>` with the email used to purchase the license and `<KEY>` with your license key.
-
-:::caution
-Never commit `auth.json` to version control. Add it to your `.gitignore`.
-:::
 
 ## Require the Package
 
 ```bash
 composer require jeffersongoncalves/filament-satis
 ```
+
+You will be prompted for credentials:
+
+```
+Loading composer repositories with package information
+Authentication required (filament-satis.composer.sh):
+Username: [licensee-email]
+Password: [license-key]
+```
+
+- **Username**: The email address associated with your license
+- **Password**: Your license key
+
+:::tip
+If your license requires a fingerprint, append it to the license key separated by a colon:
+`license-key:fingerprint`
+
+If the license is not assigned to a licensee, use `unlock` as the username.
+:::
+
+To store credentials permanently so you are not prompted every time:
+
+```bash
+composer config http-basic.filament-satis.composer.sh "[licensee-email]" "[license-key]"
+```
+
+:::caution
+Never commit `auth.json` to version control. Add it to your `.gitignore`.
+:::
 
 ## Publish Migrations
 

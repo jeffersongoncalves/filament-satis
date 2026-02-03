@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "filament-satis",
+  "compatibility_date": "2026-02-03",
+  "assets": {
+    "directory": "./dist"
+  }
+}

@@ -22,34 +22,55 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 
 ## Installation
 
-This package is distributed via [Privato](https://privato.pub). After purchasing a license, follow these steps:
+This package is distributed via [Anystack](https://checkout.anystack.sh/filament-satis). After purchasing a license, follow these steps:
 
-**1. Configure the Composer repository:**
+**1. Add the private registry to your `composer.json`:**
 
-```bash
-composer config repositories.jeffersongoncalves composer https://jsg-tecnologia.privato.pub/composer
+```json
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://filament-satis.composer.sh"
+        }
+    ]
+}
 ```
 
-**2. Authenticate with Privato:**
-
-```bash
-composer config --auth http-basic.jsg-tecnologia.privato.pub "<EMAIL>" "<KEY>"
-```
-
-**3. Require the package:**
+**2. Require the package:**
 
 ```bash
 composer require jeffersongoncalves/filament-satis
 ```
 
-**4. Publish and run migrations:**
+You will be prompted for credentials:
+
+```
+Loading composer repositories with package information
+Authentication required (filament-satis.composer.sh):
+Username: [licensee-email]
+Password: [license-key]
+```
+
+- **Username**: Your licensee email address
+- **Password**: Your license key
+
+> If your license requires a fingerprint, append it to the license key separated by a colon (e.g. `license-key:fingerprint`). If the license is not assigned to a licensee, use `unlock` as the username.
+
+To store credentials permanently, run:
+
+```bash
+composer config http-basic.filament-satis.composer.sh "[licensee-email]" "[license-key]"
+```
+
+**3. Publish and run migrations:**
 
 ```bash
 php artisan vendor:publish --tag="filament-satis-migrations"
 php artisan migrate
 ```
 
-**5. Publish the config (optional):**
+**4. Publish the config (optional):**
 
 ```bash
 php artisan vendor:publish --tag="filament-satis-config"
