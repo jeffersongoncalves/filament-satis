@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        $prefix = config('filament-satis.table_prefix', 'satis_');
+
+        Schema::create($prefix.'packages', function (Blueprint $table) use ($prefix) {
+            $table->id();
+            $table->string('name');
+            $table->string('type')->default('composer');
+            $table->string('url');
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
+            $table->string('webhook_secret')->nullable()->unique();
+            $table->string('reference')->nullable()->unique();
+            $table->boolean('is_credentials_validated')->default(false);
+            $table->timestamp('credentials_validated_at')->nullable();
+            $table->timestamps();
+
+            if (config('filament-satis.tenancy.enabled') && config('filament-satis.tenancy.foreign_key')) {
+                $fk = config('filament-satis.tenancy.foreign_key');
+                $tenantModel = config('filament-satis.tenancy.model');
+                $tenantTable = (new $tenantModel)->getTable();
+
+                $table->foreignId($fk)
+                    ->constrained($tenantTable)
+                    ->cascadeOnDelete();
+
+                $table->index($fk);
+            }
+        });
+    }
+
+    public function down(): void
+    {
+        $prefix = config('filament-satis.table_prefix', 'satis_');
+
+        Schema::dropIfExists($prefix.'packages');
+    }
+};
