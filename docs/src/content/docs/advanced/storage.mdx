@@ -1,0 +1,91 @@
+---
+title: Storage
+description: Configuring storage disks and paths for Satis builds.
+---
+
+Satis builds produce `packages.json`, include files, and package archives. Filament Satis stores all build output using Laravel's filesystem abstraction.
+
+## Configuration
+
+```php
+'storage_disk' => 'local',
+'storage_path' => 'satis',
+```
+
+| Key | Description |
+|-----|-------------|
+| `storage_disk` | Any configured Laravel filesystem disk |
+| `storage_path` | Base directory within the disk |
+
+## Directory Structure
+
+Build output is organized by tenant and token:
+
+```
+{storage_path}/
+└── {tenant_id}/
+    └── {token_id}/
+        ├── satis.json
+        ├── packages.json
+        ├── include/
+        │   └── all${hash}.json
+        └── archives/
+            └── vendor/
+                └── package/
+                    └── package-1.0.0.zip
+```
+
+Without multi-tenancy, the `{tenant_id}` level is omitted.
+
+## Using S3 or Other Disks
+
+To store builds on S3:
+
+1. Configure the disk in `config/filesystems.php`:
+
+```php
+'disks' => [
+    'satis' => [
+        'driver' => 's3',
+        'key' => env('SATIS_AWS_ACCESS_KEY_ID'),
+        'secret' => env('SATIS_AWS_SECRET_ACCESS_KEY'),
+        'region' => env('SATIS_AWS_DEFAULT_REGION', 'us-east-1'),
+        'bucket' => env('SATIS_AWS_BUCKET'),
+    ],
+],
+```
+
+2. Update the plugin config:
+
+```php
+'storage_disk' => 'satis',
+'storage_path' => 'builds',
+```
+
+## Archive Configuration
+
+The Satis base config controls archive behavior:
+
+```php
+'satis' => [
+    'archive' => [
+        'directory' => 'archives',
+        'skip_dev' => true,
+    ],
+],
+```
+
+| Key | Description |
+|-----|-------------|
+| `directory` | Subdirectory for zip/tar archives within each build |
+| `skip_dev` | Skip creating archives for dev branches |
+
+## Serving Archives
+
+The `ArchivesController` serves archive files through the application, authenticating requests with the token middleware. Archives are streamed from the configured storage disk, so they work with both local and remote storage drivers.
+
+Route pattern:
+
+```
+GET /satis/archives/{vendor}/{package}/{file}
+```

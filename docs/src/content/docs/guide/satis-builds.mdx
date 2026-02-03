@@ -1,0 +1,91 @@
+---
+title: Satis Builds
+description: Understanding the build process, commands, and scheduling.
+---
+
+The build process generates the `packages.json` and archive files that Composer clients use to discover and download your private packages.
+
+## How Builds Work
+
+When a build runs, the following happens:
+
+1. **Tenant build** — A `satis.json` is generated from all packages, and `satis build` is executed
+2. **Token builds** — For each token, a filtered `satis.json` is generated containing only assigned packages, and `satis build` runs again
+
+This produces a separate repository per token, ensuring scoped access.
+
+## Build Command
+
+```bash
+php artisan satis:build
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--tenant=ID` | Build only for a specific tenant (multi-tenancy mode) |
+
+The command dispatches `SyncTenantPackages` and `SyncTokenPackages` jobs to the configured queue.
+
+## Validation Command
+
+```bash
+php artisan satis:validate
+```
+
+Validates that all package credentials are still valid. Dispatches `ValidateTenantSatisBuild` and `ValidateTokenSatisBuild` jobs.
+
+| Option | Description |
+|--------|-------------|
+| `--tenant=ID` | Validate only for a specific tenant |
+
+## Dependencies Command
+
+```bash
+php artisan dependency:packages
+```
+
+Processes and records package dependencies from build output.
+
+## Scheduling
+
+All three commands can be scheduled automatically. Configure frequencies in `config/filament-satis.php`:
+
+```php
+'schedule' => [
+    'build' => 'weekly',       // Rebuild all repos weekly
+    'validate' => 'hourly',    // Check credentials hourly
+    'dependencies' => 'weekly', // Process deps weekly
+],
+```
+
+Accepted values are any Laravel Schedule frequency method: `everyMinute`, `everyFiveMinutes`, `hourly`, `daily`, `weekly`, `monthly`, or `null` to disable.
+
+## Build Output
+
+Builds are stored at the path configured by `storage_disk` and `storage_path`:
+
+```
+storage/{storage_path}/{tenant_id}/{token_id}/
+├── satis.json          # Generated config
+├── packages.json       # Composer metadata
+├── include/            # Hashed package includes
+└── archives/           # Package dist files
+    └── vendor/
+        └── package/
+            └── package-1.0.0.zip
+```
+
+## Job Configuration
+
+Build jobs have a 600-second (10 minute) timeout. Configure the queue connection and queue name in the config:
+
+```php
+'queue' => [
+    'connection' => 'redis',
+    'queue_name' => 'satis-builds',
+],
+```
+
+See [Queue & Scheduling](/advanced/queue-config/) for advanced queue configuration.

@@ -1,0 +1,104 @@
+---
+title: Queue & Scheduling
+description: Configuring queues and scheduled commands.
+---
+
+Filament Satis uses Laravel's queue system for builds and validation, and the scheduler for automated runs.
+
+## Queue Configuration
+
+Configure the queue connection and queue name in `config/filament-satis.php`:
+
+```php
+'queue' => [
+    'connection' => 'redis',    // null = default connection
+    'queue_name' => 'satis',    // null = default queue
+],
+```
+
+### Dedicated Queue Worker
+
+For production, run a dedicated worker for Satis jobs:
+
+```bash
+php artisan queue:work redis --queue=satis --timeout=700
+```
+
+:::note
+Build jobs have a 600-second timeout. Set your worker's `--timeout` higher (e.g. 700) to avoid the worker killing the job before it completes.
+:::
+
+## Jobs Overview
+
+| Job | Dispatched By | Timeout | Description |
+|-----|---------------|---------|-------------|
+| `SyncTenantPackages` | `satis:build` | 600s | Builds full tenant repository |
+| `SyncTokenPackages` | `SyncTenantPackages` | 600s | Builds per-token repository |
+| `ValidateTenantSatisBuild` | `satis:validate` | — | Validates tenant package credentials |
+| `ValidateTokenSatisBuild` | `ValidateTenantSatisBuild` | — | Validates per-token credentials |
+| `DownloadComposerJob` | `DownloadComposerController` | — | Records download statistics |
+| `ProcessPackageDependency` | `dependency:packages` | — | Processes package dependency data |
+
+### Job Chain
+
+Build jobs follow a chain:
+
+```
+satis:build
+  └─ SyncTenantPackages (per tenant)
+       └─ SyncTokenPackages (per token in tenant)
+```
+
+`SyncTenantPackages` dispatches `SyncTokenPackages` jobs after completing the tenant-level build.
+
+## Scheduling
+
+Configure command frequencies in the config:
+
+```php
+'schedule' => [
+    'build' => 'weekly',
+    'validate' => 'hourly',
+    'dependencies' => 'weekly',
+],
+```
+
+### Available Frequencies
+
+Any Laravel Schedule frequency method works:
+
+| Value | Frequency |
+|-------|-----------|
+| `everyMinute` | Every minute |
+| `everyFiveMinutes` | Every 5 minutes |
+| `everyFifteenMinutes` | Every 15 minutes |
+| `everyThirtyMinutes` | Every 30 minutes |
+| `hourly` | Every hour |
+| `daily` | Once daily at midnight |
+| `weekly` | Once weekly on Sunday |
+| `monthly` | Once monthly on the 1st |
+| `null` | Disabled |
+
+### Ensuring the Scheduler Runs
+
+Add the scheduler to your server's crontab:
+
+```
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Or use Laravel's `schedule:work` command during development:
+
+```bash
+php artisan schedule:work
+```
+
+## Synchronous Builds
+
+For testing or small repositories, you can run builds synchronously by setting the `QUEUE_CONNECTION` to `sync`:
+
+```ini
+QUEUE_CONNECTION=sync
+```
+
+Then run `php artisan satis:build` — jobs will execute immediately in the current process.

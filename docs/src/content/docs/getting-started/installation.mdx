@@ -1,0 +1,90 @@
+---
+title: Installation
+description: Purchase a license and install Filament Satis via Composer.
+---
+
+## Purchase a License
+
+Filament Satis is distributed through [Privato](https://privato.pub). Visit the product page, purchase a license, and note your **license key**.
+
+## Add the Privato Repository
+
+Add Privato as a Composer repository in your project's `composer.json`:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://privato.pub"
+    }
+  ]
+}
+```
+
+## Authenticate
+
+Create or update `auth.json` in your project root (or globally at `~/.composer/auth.json`):
+
+```json
+{
+  "http-basic": {
+    "privato.pub": {
+      "username": "your-email@example.com",
+      "password": "your-license-key"
+    }
+  }
+}
+```
+
+:::caution
+Never commit `auth.json` to version control. Add it to your `.gitignore`.
+:::
+
+## Install the Package
+
+```bash
+composer require jeffersongoncalves/filament-satis
+```
+
+## Publish Migrations
+
+```bash
+php artisan vendor:publish --tag="filament-satis-migrations"
+php artisan migrate
+```
+
+This creates the following tables (all prefixed with `satis_` by default):
+
+| Table | Purpose |
+|-------|---------|
+| `satis_packages` | Package sources |
+| `satis_tokens` | Authentication tokens |
+| `satis_package_releases` | Version/release data |
+| `satis_dependencies` | Dependency records |
+| `satis_package_downloads` | Download statistics |
+| `satis_packagists` | Packagist metadata |
+| `satis_package_token` | Package-token pivot |
+| `satis_dependency_package_release` | Dependency-release pivot |
+
+## Publish Config (Optional)
+
+```bash
+php artisan vendor:publish --tag="filament-satis-config"
+```
+
+This publishes `config/filament-satis.php` where you can customize tenancy, storage, queue, scheduling, and more.
+
+## Satis Binary
+
+Satis (`composer/satis`) is included as a dependency and installed automatically. By default, the plugin uses `vendor/bin/satis`.
+
+To use a different binary, set a custom path in the config:
+
+```php
+'satis_binary' => '/usr/local/bin/satis',
+```
+
+## Next Steps
+
+Head to the [Quick Start](/getting-started/quick-start/) to register your first package and create a token.

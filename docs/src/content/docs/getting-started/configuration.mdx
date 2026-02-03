@@ -1,0 +1,147 @@
+---
+title: Configuration
+description: Deep dive into the filament-satis.php config file.
+---
+
+After publishing the config file with `php artisan vendor:publish --tag="filament-satis-config"`, you'll find `config/filament-satis.php` with the following sections.
+
+## Multi-Tenancy
+
+```php
+'tenancy' => [
+    'enabled' => false,
+    'model' => null,           // e.g. App\Models\Team::class
+    'foreign_key' => null,     // e.g. 'team_id'
+    'ownership_relationship' => null, // e.g. 'team'
+],
+```
+
+When enabled, all packages, tokens, and related data are scoped to a tenant using global scopes. See [Multi-Tenancy](/advanced/multi-tenancy/) for details.
+
+## Table Prefix
+
+```php
+'table_prefix' => 'satis_',
+```
+
+Applied to all database tables created by the plugin. Change this if `satis_` conflicts with your existing schema.
+
+## Models
+
+```php
+'models' => [
+    'package' => \JeffersonGoncalves\FilamentSatis\Models\Package::class,
+    'token' => \JeffersonGoncalves\FilamentSatis\Models\Token::class,
+    'dependency' => \JeffersonGoncalves\FilamentSatis\Models\Dependency::class,
+    'package_release' => \JeffersonGoncalves\FilamentSatis\Models\PackageRelease::class,
+    'package_download' => \JeffersonGoncalves\FilamentSatis\Models\PackageDownload::class,
+    'packagist' => \JeffersonGoncalves\FilamentSatis\Models\Packagist::class,
+],
+```
+
+Override any model with your own implementation. Custom models must extend the originals. See [Custom Models](/advanced/custom-models/).
+
+## Storage
+
+```php
+'storage_disk' => 'local',
+'storage_path' => 'satis',
+```
+
+Controls where Satis builds are stored. Supports any Laravel filesystem disk (`local`, `s3`, etc.). See [Storage](/advanced/storage/).
+
+## Satis Binary
+
+```php
+'satis_binary' => null,
+```
+
+When `null`, uses `vendor/bin/satis`. Set an absolute path to use a globally installed Satis binary.
+
+## Satis Base Config
+
+```php
+'satis' => [
+    'name' => 'my/repository',
+    'output_html' => false,
+    'archive' => [
+        'directory' => 'archives',
+        'skip_dev' => true,
+    ],
+    'minimum_stability' => 'stable',
+    'secure_http' => false,
+],
+```
+
+These values form the base `satis.json` generated on each build. Repositories and requirements are merged in automatically from your packages.
+
+| Key | Description |
+|-----|-------------|
+| `name` | Repository name shown in `packages.json` |
+| `output_html` | Generate an HTML index page |
+| `archive.directory` | Subdirectory for dist archives |
+| `archive.skip_dev` | Skip dev branches in archives |
+| `minimum_stability` | Minimum stability filter |
+| `secure_http` | Require HTTPS for package URLs |
+
+## Queue
+
+```php
+'queue' => [
+    'connection' => null,
+    'queue_name' => null,
+],
+```
+
+Configures which queue connection and queue name build jobs use. When `null`, the application defaults apply. See [Queue & Scheduling](/advanced/queue-config/).
+
+## Schedule
+
+```php
+'schedule' => [
+    'build' => 'weekly',
+    'validate' => 'hourly',
+    'dependencies' => 'weekly',
+],
+```
+
+Controls the frequency of scheduled commands. Accepts any Laravel Schedule frequency method (`hourly`, `daily`, `weekly`, `monthly`, etc.) or `null` to disable.
+
+## Auth
+
+```php
+'auth' => [
+    'guard' => 'satis-token',
+    'provider' => 'satis-tokens',
+],
+```
+
+The authentication guard and provider registered for Composer API authentication. Tokens authenticate via HTTP Basic Auth or Bearer tokens.
+
+## Routes
+
+```php
+'routes' => [
+    'api_prefix' => 'api/satis',
+    'composer_prefix' => 'satis',
+    'middleware' => ['api'],
+],
+```
+
+| Key | Description |
+|-----|-------------|
+| `api_prefix` | Prefix for internal API routes (downloads, webhooks) |
+| `composer_prefix` | Prefix for Composer-facing routes (`packages.json`, archives) |
+| `middleware` | Middleware applied to all plugin routes |
+
+## Navigation
+
+```php
+'navigation' => [
+    'group' => 'Satis',
+    'icon' => 'heroicon-o-archive-box',
+    'sort' => 50,
+],
+```
+
+Controls the Filament navigation group, icon, and sort order for all plugin resources.

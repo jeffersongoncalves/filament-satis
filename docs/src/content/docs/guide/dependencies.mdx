@@ -1,0 +1,76 @@
+---
+title: Dependencies
+description: Tracking and managing package dependencies.
+---
+
+Filament Satis tracks the dependencies of every package release, classifying them as public or private.
+
+## Dependency Types
+
+| Type | Description |
+|------|-------------|
+| **Public** | Dependencies available on Packagist (e.g. `laravel/framework`) |
+| **Private** | Dependencies hosted in your Satis repository |
+
+This classification helps you understand which packages rely on other private packages, making it easier to manage your internal dependency graph.
+
+## Processing Dependencies
+
+Dependencies are extracted during builds and processed by the `dependency:packages` command:
+
+```bash
+php artisan dependency:packages
+```
+
+This command can also be scheduled:
+
+```php
+'schedule' => [
+    'dependencies' => 'weekly',
+],
+```
+
+## Viewing Dependencies
+
+Navigate to **Satis > Dependencies** in your Filament panel.
+
+Each dependency record shows:
+
+| Field | Description |
+|-------|-------------|
+| **Name** | The dependency package name |
+| **Type** | Public or Private |
+| **Versions** | Version constraints used across releases |
+
+You can filter dependencies by type using the built-in table filter.
+
+## Dependency-Release Relationships
+
+Dependencies are linked to package releases through a pivot table. Each relationship records:
+
+- The dependency name and version constraint
+- The package release that requires it
+- The parent package ID
+
+This allows you to trace which versions of your packages depend on which versions of other packages.
+
+## Data Model
+
+Dependencies use two tables:
+
+**`satis_dependencies`**:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `name` | string | Dependency package name |
+| `type` | enum | `public` or `private` |
+| `versions` | json | Array of version constraints |
+
+**`satis_dependency_package_release`** (pivot):
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `dependency_id` | bigint | FK to dependencies |
+| `package_release_id` | bigint | FK to package releases |
+| `version` | string | Version constraint |
+| `package_id` | bigint | FK to parent package |

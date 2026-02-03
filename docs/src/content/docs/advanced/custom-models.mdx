@@ -1,0 +1,79 @@
+---
+title: Custom Models
+description: Overriding default models with your own implementations.
+---
+
+Filament Satis allows you to replace any of its Eloquent models with your own. This is useful for adding custom logic, relationships, or attributes.
+
+## Configuring Custom Models
+
+Update the `models` array in `config/filament-satis.php`:
+
+```php
+'models' => [
+    'package' => \App\Models\SatisPackage::class,
+    'token' => \App\Models\SatisToken::class,
+    'dependency' => \JeffersonGoncalves\FilamentSatis\Models\Dependency::class,
+    'package_release' => \JeffersonGoncalves\FilamentSatis\Models\PackageRelease::class,
+    'package_download' => \JeffersonGoncalves\FilamentSatis\Models\PackageDownload::class,
+    'packagist' => \JeffersonGoncalves\FilamentSatis\Models\Packagist::class,
+],
+```
+
+## Creating a Custom Model
+
+Your custom model **must** extend the original:
+
+```php
+<?php
+
+namespace App\Models;
+
+use JeffersonGoncalves\FilamentSatis\Models\Package as BasePackage;
+
+class SatisPackage extends BasePackage
+{
+    // Add custom relationships
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Add custom scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    // Override existing behavior
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::created(function ($package) {
+            // Custom logic on creation
+        });
+    }
+}
+```
+
+## Model Resolution
+
+The plugin uses a `ModelResolver` support class to resolve the correct model class at runtime. All internal code references models through this resolver, so your custom model is used everywhere automatically — in resources, jobs, controllers, and actions.
+
+## Available Models
+
+| Key | Default Class | Purpose |
+|-----|---------------|---------|
+| `package` | `Models\Package` | Package sources |
+| `token` | `Models\Token` | Auth tokens |
+| `dependency` | `Models\Dependency` | Dependency records |
+| `package_release` | `Models\PackageRelease` | Version/release data |
+| `package_download` | `Models\PackageDownload` | Download statistics |
+| `packagist` | `Models\Packagist` | Packagist metadata |
+
+## Notes
+
+- Custom models inherit all traits (`HasTenancy`, `GenerateCode`, `HasFactory`) from the base model
+- Observers registered on the base model still fire for custom models
+- If you override the `$table` property, ensure it matches the expected table name with the configured prefix

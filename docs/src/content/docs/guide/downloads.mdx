@@ -1,0 +1,45 @@
+---
+title: Downloads
+description: Tracking package download statistics.
+---
+
+Filament Satis tracks download counts for every package version served through your Composer repository.
+
+## How Tracking Works
+
+When a Composer client downloads a package, it sends a POST request to the downloads endpoint:
+
+```
+POST /api/satis/composer/downloads
+```
+
+The `DownloadComposerController` processes this request and dispatches a `DownloadComposerJob` to record the download asynchronously.
+
+## Viewing Downloads
+
+Navigate to **Satis > Downloads** in your Filament panel to see download statistics.
+
+Each record shows:
+
+| Field | Description |
+|-------|-------------|
+| **Package** | The package name |
+| **Version** | The specific version downloaded |
+| **Downloads** | Total download count for this version |
+
+Results are sorted by download count (descending) so your most popular packages and versions appear first.
+
+## Per-Package Downloads
+
+You can also view downloads for a specific package by going to the package detail page and selecting the **Downloads** tab.
+
+## Data Model
+
+Downloads are stored in the `satis_package_downloads` table:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | bigint | Primary key |
+| `package_id` | bigint | Foreign key to packages |
+| `version` | string | Version string |
+| `downloads` | integer | Cumulative download count |
