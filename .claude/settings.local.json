@@ -3,7 +3,10 @@
     "allow": [
       "Bash(pnpm install:*)",
       "Bash(pnpm approve-builds:*)",
-      "Bash(pnpm run build)"
+      "Bash(pnpm run build)",
+      "Bash(git add:*)",
+      "Bash(git push)",
+      "Bash(git commit:*)"
     ]
   }
 }
