@@ -104,7 +104,7 @@ php artisan satis:build
 
 ## Documentation
 
-Full documentation is available at the [documentation site](https://filament-satis.pages.dev).
+Full documentation is available at the [documentation site](https://filament-satis.jsg.tec.br/).
 
 ## Commands
 
