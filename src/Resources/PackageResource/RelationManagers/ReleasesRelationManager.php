@@ -12,7 +12,7 @@ class ReleasesRelationManager extends RelationManager
 
     public static function getTitle($ownerRecord, string $pageClass): string
     {
-        return __('filament-satis::package-release.plural_model_label');
+        return __('laravel-satis::package-release.plural_model_label');
     }
 
     public function table(Table $table): Table
@@ -20,20 +20,20 @@ class ReleasesRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('version')
-                    ->label(__('filament-satis::package-release.fields.version'))
+                    ->label(__('laravel-satis::package-release.fields.version'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('filament-satis::package-release.fields.type'))
+                    ->label(__('laravel-satis::package-release.fields.type'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('time')
-                    ->label(__('filament-satis::package-release.fields.time'))
+                    ->label(__('laravel-satis::package-release.fields.time'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('filament-satis::general.created_at'))
+                    ->label(__('laravel-satis::general.created_at'))
                     ->dateTime()
                     ->sortable(),
             ])

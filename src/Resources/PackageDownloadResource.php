@@ -7,7 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloadResource\Pages;
-use JeffersonGoncalves\FilamentSatis\Support\ModelResolver;
+use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageDownloadResource extends Resource
 {
@@ -27,17 +27,17 @@ class PackageDownloadResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('filament-satis::package-download.navigation_label');
+        return __('laravel-satis::package-download.navigation_label');
     }
 
     public static function getModelLabel(): string
     {
-        return __('filament-satis::package-download.model_label');
+        return __('laravel-satis::package-download.model_label');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('filament-satis::package-download.plural_model_label');
+        return __('laravel-satis::package-download.plural_model_label');
     }
 
     public static function table(Table $table): Table
@@ -45,22 +45,22 @@ class PackageDownloadResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('package.name')
-                    ->label(__('filament-satis::package-download.fields.package'))
+                    ->label(__('laravel-satis::package-download.fields.package'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('version')
-                    ->label(__('filament-satis::package-download.fields.version'))
+                    ->label(__('laravel-satis::package-download.fields.version'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('downloads')
-                    ->label(__('filament-satis::package-download.fields.downloads'))
+                    ->label(__('laravel-satis::package-download.fields.downloads'))
                     ->numeric()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('filament-satis::general.updated_at'))
+                    ->label(__('laravel-satis::general.updated_at'))
                     ->dateTime()
                     ->sortable(),
             ])
