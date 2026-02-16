@@ -41,7 +41,7 @@ This release upgrades the plugin to **Filament v4**. If you are using Filament v
 
 - Upgraded to Filament v4 API (`Schema`, `recordActions`, `toolbarActions`)
 - Migrated to Filament v4 pluralized directory structure
-- Updated `orchestra/testbench` requirement to `^10.0|^11.0`
+- Updated `orchestra/testbench` requirement to `^9.0|^10.0` (9.x for Laravel 11, 10.x for Laravel 12)
 - Updated CI workflows for branch `2.x` and Filament `4.*`
 
 ## 1.0.0 - Initial Release
