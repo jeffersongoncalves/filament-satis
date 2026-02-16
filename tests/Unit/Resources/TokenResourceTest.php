@@ -1,6 +1,6 @@
 <?php
 
-use JeffersonGoncalves\FilamentSatis\Resources\TokenResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Tokens\TokenResource;
 use JeffersonGoncalves\LaravelSatis\Models\Token;
 
 it('resolves the correct model', function () {

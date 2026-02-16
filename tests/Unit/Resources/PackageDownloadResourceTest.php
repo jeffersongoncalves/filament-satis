@@ -1,6 +1,6 @@
 <?php
 
-use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloadResource;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\PackageDownloadResource;
 use JeffersonGoncalves\LaravelSatis\Models\PackageDownload;
 
 it('resolves the correct model', function () {

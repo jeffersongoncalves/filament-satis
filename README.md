@@ -19,8 +19,14 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 ## Requirements
 
 - PHP 8.2+
-- Laravel 10+
-- Filament 3.0+
+- Laravel 11+
+- Filament 4.0+
+
+## Upgrading from 1.x
+
+If you are upgrading from `1.x` (Filament v3), see the [CHANGELOG](CHANGELOG.md) for a full list of breaking changes and the namespace migration guide.
+
+> **Note:** If you need Filament v3 support, use the [`1.x` branch](https://github.com/jeffersongoncalves/filament-satis/tree/1.x).
 
 ## Installation
 

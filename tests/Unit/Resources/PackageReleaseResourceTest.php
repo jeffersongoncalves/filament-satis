@@ -1,6 +1,6 @@
 <?php
 
-use JeffersonGoncalves\FilamentSatis\Resources\PackageReleaseResource;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageReleases\PackageReleaseResource;
 use JeffersonGoncalves\LaravelSatis\Models\PackageRelease;
 
 it('resolves the correct model', function () {

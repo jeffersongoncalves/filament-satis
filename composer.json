@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "filament/filament": "^3.0",
+        "filament/filament": "^4.0",
         "jeffersongoncalves/laravel-satis": "^1.2",
         "spatie/laravel-package-tools": "^1.15"
     },
@@ -29,7 +29,7 @@
         "larastan/larastan": "^3.9",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
-        "orchestra/testbench": "^9.0|^10.0",
+        "orchestra/testbench": "^10.0|^11.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
         "pestphp/pest-plugin-livewire": "^3.0"

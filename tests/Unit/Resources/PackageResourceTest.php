@@ -1,6 +1,6 @@
 <?php
 
-use JeffersonGoncalves\FilamentSatis\Resources\PackageResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Packages\PackageResource;
 use JeffersonGoncalves\LaravelSatis\Models\Package;
 
 it('resolves the correct model', function () {

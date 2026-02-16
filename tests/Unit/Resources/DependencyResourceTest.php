@@ -1,6 +1,6 @@
 <?php
 
-use JeffersonGoncalves\FilamentSatis\Resources\DependencyResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Dependencies\DependencyResource;
 use JeffersonGoncalves\LaravelSatis\Models\Dependency;
 
 it('resolves the correct model', function () {

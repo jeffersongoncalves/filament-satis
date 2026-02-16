@@ -4,11 +4,11 @@ namespace JeffersonGoncalves\FilamentSatis;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use JeffersonGoncalves\FilamentSatis\Resources\DependencyResource;
-use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloadResource;
-use JeffersonGoncalves\FilamentSatis\Resources\PackageReleaseResource;
-use JeffersonGoncalves\FilamentSatis\Resources\PackageResource;
-use JeffersonGoncalves\FilamentSatis\Resources\TokenResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Dependencies\DependencyResource;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\PackageDownloadResource;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageReleases\PackageReleaseResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Packages\PackageResource;
+use JeffersonGoncalves\FilamentSatis\Resources\Tokens\TokenResource;
 
 class FilamentSatisPlugin implements Plugin
 {
@@ -25,6 +25,7 @@ class FilamentSatisPlugin implements Plugin
 
     public static function get(): static
     {
+        /** @var static */
         return filament(app(static::class)->getId());
     }
 
