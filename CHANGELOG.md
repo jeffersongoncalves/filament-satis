@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.0.0 - Unreleased
+
+### Upgrading from 2.x
+
+This release upgrades the plugin to **Filament v5** with **Livewire v4** support. The Filament API remains unchanged — no breaking changes in resource structure, schemas, or tables.
+
+If you are using Filament v4, continue using the `2.x` branch.
+
+#### Requirements
+
+- PHP 8.2+
+- Laravel 12+
+- Filament 5.0+
+
+### Changed
+
+- Upgraded to Filament v5 (Livewire v4 support)
+- Updated `orchestra/testbench` requirement to `^10.0|^11.0` (10.x for Laravel 12)
+- Updated `pestphp/pest` requirement to `^4.0`
+- Updated `pestphp/pest-plugin-laravel` requirement to `^4.0`
+- Updated `pestphp/pest-plugin-livewire` requirement to `^4.0`
+- Updated CI workflows for branch `3.x` and Filament `5.*`
+
 ## 2.0.0 - Unreleased
 
 ### Upgrading from 1.x
