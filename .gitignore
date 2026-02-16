@@ -9,3 +9,4 @@ composer.lock
 *.swo
 coverage
 .php-cs-fixer.cache
+.claude/settings.local.json
