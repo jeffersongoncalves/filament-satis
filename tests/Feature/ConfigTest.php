@@ -1,41 +1,29 @@
 <?php
 
-it('loads config file', function () {
+it('loads filament-satis config file', function () {
     expect(config('filament-satis'))->toBeArray();
 });
 
-it('has default table prefix', function () {
-    expect(config('filament-satis.table_prefix'))->toBe('satis_');
+it('has default navigation group', function () {
+    expect(config('filament-satis.navigation.group'))->toBe('Satis');
 });
 
-it('has tenancy disabled by default', function () {
-    expect(config('filament-satis.tenancy.enabled'))->toBeFalse();
+it('has default navigation icon', function () {
+    expect(config('filament-satis.navigation.icon'))->toBe('heroicon-o-archive-box');
 });
 
-it('has default storage disk', function () {
-    expect(config('filament-satis.storage_disk'))->toBe('local');
+it('has default navigation sort', function () {
+    expect(config('filament-satis.navigation.sort'))->toBe(50);
 });
 
-it('has default storage path', function () {
-    expect(config('filament-satis.storage_path'))->toBe('satis');
+it('loads laravel-satis config as dependency', function () {
+    expect(config('laravel-satis'))->toBeArray();
 });
 
-it('has default auth guard', function () {
-    expect(config('filament-satis.auth.guard'))->toBe('satis-token');
-});
+it('laravel-satis has default models configured', function () {
+    $models = config('laravel-satis.models');
 
-it('has default models configured', function () {
-    $models = config('filament-satis.models');
-
-    expect($models)->toBeArray();
-    expect($models['package'])->toBe(\JeffersonGoncalves\FilamentSatis\Models\Package::class);
-    expect($models['token'])->toBe(\JeffersonGoncalves\FilamentSatis\Models\Token::class);
-});
-
-it('has schedule configuration', function () {
-    $schedule = config('filament-satis.schedule');
-
-    expect($schedule['build'])->toBe('weekly');
-    expect($schedule['validate'])->toBe('hourly');
-    expect($schedule['dependencies'])->toBe('weekly');
+    expect($models)->toBeArray()
+        ->and($models['package'])->toBe(\JeffersonGoncalves\LaravelSatis\Models\Package::class)
+        ->and($models['token'])->toBe(\JeffersonGoncalves\LaravelSatis\Models\Token::class);
 });
