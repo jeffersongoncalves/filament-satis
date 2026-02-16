@@ -37,28 +37,9 @@ it('can disable multi-tenancy', function () {
     expect($plugin->hasMultiTenancy())->toBeFalse();
 });
 
-it('returns default navigation group from config', function () {
+it('does not have navigation group or sort methods', function () {
     $plugin = FilamentSatisPlugin::make();
 
-    expect($plugin->getNavigationGroup())->toBe('Satis');
-});
-
-it('can override navigation group', function () {
-    $plugin = FilamentSatisPlugin::make()
-        ->navigationGroup('Custom Group');
-
-    expect($plugin->getNavigationGroup())->toBe('Custom Group');
-});
-
-it('returns default navigation sort from config', function () {
-    $plugin = FilamentSatisPlugin::make();
-
-    expect($plugin->getNavigationSort())->toBe(50);
-});
-
-it('can override navigation sort', function () {
-    $plugin = FilamentSatisPlugin::make()
-        ->navigationSort(10);
-
-    expect($plugin->getNavigationSort())->toBe(10);
+    expect(method_exists($plugin, 'navigationGroup'))->toBeFalse();
+    expect(method_exists($plugin, 'navigationSort'))->toBeFalse();
 });

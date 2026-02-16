@@ -5,15 +5,64 @@ it('loads filament-satis config file', function () {
 });
 
 it('has default navigation group', function () {
-    expect(config('filament-satis.navigation.group'))->toBe('Satis');
+    expect(config('filament-satis.navigation_group'))->toBe('Satis');
 });
 
-it('has default navigation icon', function () {
-    expect(config('filament-satis.navigation.icon'))->toBe('heroicon-o-archive-box');
+it('has package_resource config with all keys', function () {
+    $config = config('filament-satis.package_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['cluster'])->toBeNull();
+    expect($config['should_register_navigation'])->toBeTrue();
+    expect($config['navigation_icon'])->toBe('heroicon-o-cube');
+    expect($config['navigation_sort'])->toBe(1);
+    expect($config['slug'])->toBe('satis/packages');
 });
 
-it('has default navigation sort', function () {
-    expect(config('filament-satis.navigation.sort'))->toBe(50);
+it('has token_resource config with all keys', function () {
+    $config = config('filament-satis.token_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['navigation_icon'])->toBe('heroicon-o-key');
+    expect($config['navigation_sort'])->toBe(2);
+    expect($config['slug'])->toBe('satis/tokens');
+});
+
+it('has package_release_resource config with all keys', function () {
+    $config = config('filament-satis.package_release_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['navigation_icon'])->toBe('heroicon-o-tag');
+    expect($config['navigation_sort'])->toBe(3);
+    expect($config['slug'])->toBe('satis/package-releases');
+});
+
+it('has package_download_resource config with all keys', function () {
+    $config = config('filament-satis.package_download_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['navigation_icon'])->toBe('heroicon-o-arrow-down-tray');
+    expect($config['navigation_sort'])->toBe(4);
+    expect($config['slug'])->toBe('satis/package-downloads');
+});
+
+it('has dependency_resource config with all keys', function () {
+    $config = config('filament-satis.dependency_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['navigation_icon'])->toBe('heroicon-o-link');
+    expect($config['navigation_sort'])->toBe(5);
+    expect($config['slug'])->toBe('satis/dependencies');
 });
 
 it('loads laravel-satis config as dependency', function () {

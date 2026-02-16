@@ -7,7 +7,6 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\DependencyResource\Pages;
 use JeffersonGoncalves\FilamentSatis\Resources\DependencyResource\RelationManagers;
 use JeffersonGoncalves\LaravelSatis\Enums\DependencyType;
@@ -15,18 +14,39 @@ use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class DependencyResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-link';
-
-    protected static ?int $navigationSort = 5;
-
     public static function getModel(): string
     {
         return ModelResolver::dependency();
     }
 
+    public static function getNavigationIcon(): ?string
+    {
+        return config('filament-satis.dependency_resource.navigation_icon', 'heroicon-o-link');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-satis.dependency_resource.navigation_sort', 5);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return FilamentSatisPlugin::get()->getNavigationGroup();
+        return config('filament-satis.navigation_group', 'Satis');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('filament-satis.dependency_resource.should_register_navigation', true);
+    }
+
+    public static function getCluster(): ?string
+    {
+        return config('filament-satis.dependency_resource.cluster');
+    }
+
+    public static function getSlug(): string
+    {
+        return config('filament-satis.dependency_resource.slug', 'satis/dependencies');
     }
 
     public static function getNavigationLabel(): string

@@ -7,24 +7,44 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageReleaseResource\Pages;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageReleaseResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
-
-    protected static ?int $navigationSort = 3;
-
     public static function getModel(): string
     {
         return ModelResolver::packageRelease();
     }
 
+    public static function getNavigationIcon(): ?string
+    {
+        return config('filament-satis.package_release_resource.navigation_icon', 'heroicon-o-tag');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-satis.package_release_resource.navigation_sort', 3);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return FilamentSatisPlugin::get()->getNavigationGroup();
+        return config('filament-satis.navigation_group', 'Satis');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('filament-satis.package_release_resource.should_register_navigation', true);
+    }
+
+    public static function getCluster(): ?string
+    {
+        return config('filament-satis.package_release_resource.cluster');
+    }
+
+    public static function getSlug(): string
+    {
+        return config('filament-satis.package_release_resource.slug', 'satis/package-releases');
     }
 
     public static function getNavigationLabel(): string

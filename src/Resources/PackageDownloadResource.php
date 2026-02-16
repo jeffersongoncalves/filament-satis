@@ -5,24 +5,44 @@ namespace JeffersonGoncalves\FilamentSatis\Resources;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloadResource\Pages;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageDownloadResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
-
-    protected static ?int $navigationSort = 4;
-
     public static function getModel(): string
     {
         return ModelResolver::packageDownload();
     }
 
+    public static function getNavigationIcon(): ?string
+    {
+        return config('filament-satis.package_download_resource.navigation_icon', 'heroicon-o-arrow-down-tray');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-satis.package_download_resource.navigation_sort', 4);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return FilamentSatisPlugin::get()->getNavigationGroup();
+        return config('filament-satis.navigation_group', 'Satis');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('filament-satis.package_download_resource.should_register_navigation', true);
+    }
+
+    public static function getCluster(): ?string
+    {
+        return config('filament-satis.package_download_resource.cluster');
+    }
+
+    public static function getSlug(): string
+    {
+        return config('filament-satis.package_download_resource.slug', 'satis/package-downloads');
     }
 
     public static function getNavigationLabel(): string

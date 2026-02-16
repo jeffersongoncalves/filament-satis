@@ -7,7 +7,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\Pages;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\RelationManagers;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
@@ -15,18 +14,39 @@ use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
-
-    protected static ?int $navigationSort = 1;
-
     public static function getModel(): string
     {
         return ModelResolver::package();
     }
 
+    public static function getNavigationIcon(): ?string
+    {
+        return config('filament-satis.package_resource.navigation_icon', 'heroicon-o-cube');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-satis.package_resource.navigation_sort', 1);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return FilamentSatisPlugin::get()->getNavigationGroup();
+        return config('filament-satis.navigation_group', 'Satis');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('filament-satis.package_resource.should_register_navigation', true);
+    }
+
+    public static function getCluster(): ?string
+    {
+        return config('filament-satis.package_resource.cluster');
+    }
+
+    public static function getSlug(): string
+    {
+        return config('filament-satis.package_resource.slug', 'satis/packages');
     }
 
     public static function getNavigationLabel(): string

@@ -18,10 +18,6 @@ class FilamentSatisPlugin implements Plugin
 
     protected ?string $tenantForeignKey = null;
 
-    protected ?string $navigationGroup = null;
-
-    protected ?int $navigationSort = null;
-
     public static function make(): static
     {
         return app(static::class);
@@ -49,20 +45,6 @@ class FilamentSatisPlugin implements Plugin
         return $this;
     }
 
-    public function navigationGroup(?string $group): static
-    {
-        $this->navigationGroup = $group;
-
-        return $this;
-    }
-
-    public function navigationSort(?int $sort): static
-    {
-        $this->navigationSort = $sort;
-
-        return $this;
-    }
-
     public function hasMultiTenancy(): bool
     {
         return $this->multiTenancy;
@@ -76,16 +58,6 @@ class FilamentSatisPlugin implements Plugin
     public function getTenantForeignKey(): ?string
     {
         return $this->tenantForeignKey;
-    }
-
-    public function getNavigationGroup(): string
-    {
-        return $this->navigationGroup ?? config('filament-satis.navigation.group', 'Satis');
-    }
-
-    public function getNavigationSort(): int
-    {
-        return $this->navigationSort ?? config('filament-satis.navigation.sort', 50);
     }
 
     public function register(Panel $panel): void

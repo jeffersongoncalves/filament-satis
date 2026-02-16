@@ -7,24 +7,44 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use JeffersonGoncalves\FilamentSatis\FilamentSatisPlugin;
 use JeffersonGoncalves\FilamentSatis\Resources\TokenResource\Pages;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class TokenResource extends Resource
 {
-    protected static ?string $navigationIcon = 'heroicon-o-key';
-
-    protected static ?int $navigationSort = 2;
-
     public static function getModel(): string
     {
         return ModelResolver::token();
     }
 
+    public static function getNavigationIcon(): ?string
+    {
+        return config('filament-satis.token_resource.navigation_icon', 'heroicon-o-key');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-satis.token_resource.navigation_sort', 2);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return FilamentSatisPlugin::get()->getNavigationGroup();
+        return config('filament-satis.navigation_group', 'Satis');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('filament-satis.token_resource.should_register_navigation', true);
+    }
+
+    public static function getCluster(): ?string
+    {
+        return config('filament-satis.token_resource.cluster');
+    }
+
+    public static function getSlug(): string
+    {
+        return config('filament-satis.token_resource.slug', 'satis/tokens');
     }
 
     public static function getNavigationLabel(): string
