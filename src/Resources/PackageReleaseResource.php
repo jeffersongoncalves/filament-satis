@@ -49,17 +49,17 @@ class PackageReleaseResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('laravel-satis::package-release.navigation_label');
+        return __('filament-satis::package-release.navigation_label');
     }
 
     public static function getModelLabel(): string
     {
-        return __('laravel-satis::package-release.model_label');
+        return __('filament-satis::package-release.model_label');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('laravel-satis::package-release.plural_model_label');
+        return __('filament-satis::package-release.plural_model_label');
     }
 
     public static function table(Table $table): Table
@@ -67,25 +67,25 @@ class PackageReleaseResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('package.name')
-                    ->label(__('laravel-satis::package-release.fields.package'))
+                    ->label(__('filament-satis::package-release.fields.package'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('version')
-                    ->label(__('laravel-satis::package-release.fields.version'))
+                    ->label(__('filament-satis::package-release.fields.version'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('laravel-satis::package-release.fields.type'))
+                    ->label(__('filament-satis::package-release.fields.type'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('time')
-                    ->label(__('laravel-satis::package-release.fields.time'))
+                    ->label(__('filament-satis::package-release.fields.time'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('laravel-satis::general.created_at'))
+                    ->label(__('filament-satis::general.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -103,18 +103,18 @@ class PackageReleaseResource extends Resource
                 Infolists\Components\Section::make()
                     ->schema([
                         Infolists\Components\TextEntry::make('package.name')
-                            ->label(__('laravel-satis::package-release.fields.package')),
+                            ->label(__('filament-satis::package-release.fields.package')),
                         Infolists\Components\TextEntry::make('version')
-                            ->label(__('laravel-satis::package-release.fields.version')),
+                            ->label(__('filament-satis::package-release.fields.version')),
                         Infolists\Components\TextEntry::make('type')
-                            ->label(__('laravel-satis::package-release.fields.type')),
+                            ->label(__('filament-satis::package-release.fields.type')),
                         Infolists\Components\TextEntry::make('time')
-                            ->label(__('laravel-satis::package-release.fields.time')),
+                            ->label(__('filament-satis::package-release.fields.time')),
                         Infolists\Components\TextEntry::make('description')
-                            ->label(__('laravel-satis::package-release.fields.description'))
+                            ->label(__('filament-satis::package-release.fields.description'))
                             ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('homepage')
-                            ->label(__('laravel-satis::package-release.fields.homepage'))
+                            ->label(__('filament-satis::package-release.fields.homepage'))
                             ->url(fn ($state) => $state),
                     ])->columns(2),
             ]);

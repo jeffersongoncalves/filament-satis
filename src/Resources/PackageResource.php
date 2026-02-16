@@ -51,66 +51,66 @@ class PackageResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('laravel-satis::package.navigation_label');
+        return __('filament-satis::package.navigation_label');
     }
 
     public static function getModelLabel(): string
     {
-        return __('laravel-satis::package.model_label');
+        return __('filament-satis::package.model_label');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('laravel-satis::package.plural_model_label');
+        return __('filament-satis::package.plural_model_label');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make(__('laravel-satis::package.sections.general'))
+                Forms\Components\Section::make(__('filament-satis::package.sections.general'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('laravel-satis::package.fields.name'))
+                            ->label(__('filament-satis::package.fields.name'))
                             ->required()
                             ->maxLength(255)
                             ->placeholder('vendor/package'),
 
                         Forms\Components\Select::make('type')
-                            ->label(__('laravel-satis::package.fields.type'))
+                            ->label(__('filament-satis::package.fields.type'))
                             ->options(PackageType::class)
                             ->required()
                             ->default(PackageType::Composer),
 
                         Forms\Components\TextInput::make('url')
-                            ->label(__('laravel-satis::package.fields.url'))
+                            ->label(__('filament-satis::package.fields.url'))
                             ->required()
                             ->url()
                             ->maxLength(255),
                     ])->columns(3),
 
-                Forms\Components\Section::make(__('laravel-satis::package.sections.credentials'))
+                Forms\Components\Section::make(__('filament-satis::package.sections.credentials'))
                     ->schema([
                         Forms\Components\TextInput::make('username')
-                            ->label(__('laravel-satis::package.fields.username'))
+                            ->label(__('filament-satis::package.fields.username'))
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('password')
-                            ->label(__('laravel-satis::package.fields.password'))
+                            ->label(__('filament-satis::package.fields.password'))
                             ->password()
                             ->maxLength(255),
                     ])->columns(2),
 
-                Forms\Components\Section::make(__('laravel-satis::package.sections.integration'))
+                Forms\Components\Section::make(__('filament-satis::package.sections.integration'))
                     ->schema([
                         Forms\Components\TextInput::make('webhook_secret')
-                            ->label(__('laravel-satis::package.fields.webhook_secret'))
+                            ->label(__('filament-satis::package.fields.webhook_secret'))
                             ->disabled()
                             ->dehydrated(false)
                             ->visibleOn('edit'),
 
                         Forms\Components\TextInput::make('reference')
-                            ->label(__('laravel-satis::package.fields.reference'))
+                            ->label(__('filament-satis::package.fields.reference'))
                             ->disabled()
                             ->dehydrated(false)
                             ->visibleOn('edit'),
@@ -124,33 +124,33 @@ class PackageResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('laravel-satis::package.fields.name'))
+                    ->label(__('filament-satis::package.fields.name'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('laravel-satis::package.fields.type'))
+                    ->label(__('filament-satis::package.fields.type'))
                     ->badge()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('url')
-                    ->label(__('laravel-satis::package.fields.url'))
+                    ->label(__('filament-satis::package.fields.url'))
                     ->limit(50)
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_credentials_validated')
-                    ->label(__('laravel-satis::package.fields.is_credentials_validated'))
+                    ->label(__('filament-satis::package.fields.is_credentials_validated'))
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('credentials_validated_at')
-                    ->label(__('laravel-satis::package.fields.credentials_validated_at'))
+                    ->label(__('filament-satis::package.fields.credentials_validated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('laravel-satis::general.created_at'))
+                    ->label(__('filament-satis::general.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

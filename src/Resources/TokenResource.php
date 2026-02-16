@@ -49,48 +49,48 @@ class TokenResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('laravel-satis::token.navigation_label');
+        return __('filament-satis::token.navigation_label');
     }
 
     public static function getModelLabel(): string
     {
-        return __('laravel-satis::token.model_label');
+        return __('filament-satis::token.model_label');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('laravel-satis::token.plural_model_label');
+        return __('filament-satis::token.plural_model_label');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make(__('laravel-satis::token.sections.general'))
+                Forms\Components\Section::make(__('filament-satis::token.sections.general'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('laravel-satis::token.fields.name'))
+                            ->label(__('filament-satis::token.fields.name'))
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('email')
-                            ->label(__('laravel-satis::token.fields.email'))
+                            ->label(__('filament-satis::token.fields.email'))
                             ->email()
                             ->required()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('token')
-                            ->label(__('laravel-satis::token.fields.token'))
+                            ->label(__('filament-satis::token.fields.token'))
                             ->disabled()
                             ->dehydrated(false)
                             ->visibleOn('edit')
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Section::make(__('laravel-satis::token.sections.packages'))
+                Forms\Components\Section::make(__('filament-satis::token.sections.packages'))
                     ->schema([
                         Forms\Components\Select::make('packages')
-                            ->label(__('laravel-satis::token.fields.packages'))
+                            ->label(__('filament-satis::token.fields.packages'))
                             ->relationship('packages', 'name')
                             ->multiple()
                             ->preload()
@@ -105,22 +105,22 @@ class TokenResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('laravel-satis::token.fields.name'))
+                    ->label(__('filament-satis::token.fields.name'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('email')
-                    ->label(__('laravel-satis::token.fields.email'))
+                    ->label(__('filament-satis::token.fields.email'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('packages_count')
-                    ->label(__('laravel-satis::token.fields.packages_count'))
+                    ->label(__('filament-satis::token.fields.packages_count'))
                     ->counts('packages')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('laravel-satis::general.created_at'))
+                    ->label(__('filament-satis::general.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
