@@ -19,7 +19,13 @@ class PackageReleasesTable
 
                 TextColumn::make('version')
                     ->label(__('filament-satis::package-release.fields.version'))
+                    ->badge()
                     ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('dependencies_count')
+                    ->label(__('filament-satis::dependency.plural_model_label'))
+                    ->counts('dependencies')
                     ->sortable(),
 
                 TextColumn::make('type')

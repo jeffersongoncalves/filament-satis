@@ -10,6 +10,11 @@ class ViewPackage extends ViewRecord
 {
     protected static string $resource = PackageResource::class;
 
+    public function hasCombinedRelationManagerTabsWithContent(): bool
+    {
+        return true;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

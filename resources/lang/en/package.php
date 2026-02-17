@@ -9,17 +9,33 @@ return [
         'general' => 'General Information',
         'credentials' => 'Credentials',
         'integration' => 'Integration',
+        'webhook' => 'Webhook',
     ],
 
     'fields' => [
         'name' => 'Name',
         'type' => 'Type',
         'url' => 'URL',
+        'is_dev' => 'Dev Package',
         'username' => 'Username',
         'password' => 'Password',
         'webhook_secret' => 'Webhook Secret',
         'reference' => 'Reference',
         'is_credentials_validated' => 'Validated',
         'credentials_validated_at' => 'Validated At',
+    ],
+
+    'validation' => [
+        'composer_name' => 'The name must be in the format vendor/package (lowercase, alphanumeric).',
+        'github_name' => 'The name must be in the format owner/repository.',
+    ],
+
+    'actions' => [
+        'validate_credentials' => 'Validate Credentials',
+    ],
+
+    'notifications' => [
+        'credentials_valid' => 'Credentials validated successfully.',
+        'credentials_invalid' => 'Credentials validation failed.',
     ],
 ];

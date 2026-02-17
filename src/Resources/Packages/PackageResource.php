@@ -13,6 +13,7 @@ use JeffersonGoncalves\FilamentSatis\Resources\Packages\Pages\ViewPackage;
 use JeffersonGoncalves\FilamentSatis\Resources\Packages\RelationManagers\DownloadsRelationManager;
 use JeffersonGoncalves\FilamentSatis\Resources\Packages\RelationManagers\ReleasesRelationManager;
 use JeffersonGoncalves\FilamentSatis\Resources\Packages\Schemas\PackageForm;
+use JeffersonGoncalves\FilamentSatis\Resources\Packages\Schemas\PackageInfolist;
 use JeffersonGoncalves\FilamentSatis\Resources\Packages\Tables\PackagesTable;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
@@ -68,9 +69,19 @@ class PackageResource extends Resource
         return __('filament-satis::package.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return PackageForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return PackageInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

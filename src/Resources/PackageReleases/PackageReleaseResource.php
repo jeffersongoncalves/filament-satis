@@ -64,6 +64,11 @@ class PackageReleaseResource extends Resource
         return __('filament-satis::package-release.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['version'];
+    }
+
     public static function table(Table $table): Table
     {
         return PackageReleasesTable::configure($table);

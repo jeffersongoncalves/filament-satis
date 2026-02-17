@@ -2,9 +2,12 @@
 
 namespace JeffersonGoncalves\FilamentSatis\Resources\Packages\Schemas;
 
-use Filament\Forms\Components\Select;
+use Closure;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
 
@@ -20,20 +23,42 @@ class PackageForm
                             ->label(__('filament-satis::package.fields.name'))
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('vendor/package'),
+                            ->placeholder('vendor/package')
+                            ->disabled(fn (string $operation): bool => $operation === 'edit')
+                            ->rules([
+                                fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                    $type = $get('type');
+                                    if ($type === PackageType::Composer->value || $type === PackageType::Composer) {
+                                        if (! preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9]([_.-]?[a-z0-9]+)*$/', $value)) {
+                                            $fail(__('filament-satis::package.validation.composer_name'));
+                                        }
+                                    } elseif ($type === PackageType::Github->value || $type === PackageType::Github) {
+                                        if (! preg_match('/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/', $value)) {
+                                            $fail(__('filament-satis::package.validation.github_name'));
+                                        }
+                                    }
+                                },
+                            ]),
 
-                        Select::make('type')
+                        Toggle::make('is_dev')
+                            ->label(__('filament-satis::package.fields.is_dev'))
+                            ->default(false),
+
+                        ToggleButtons::make('type')
                             ->label(__('filament-satis::package.fields.type'))
                             ->options(PackageType::class)
                             ->required()
-                            ->default(PackageType::Composer),
+                            ->default(PackageType::Composer)
+                            ->inline()
+                            ->grouped()
+                            ->live(),
 
                         TextInput::make('url')
                             ->label(__('filament-satis::package.fields.url'))
                             ->required()
                             ->url()
                             ->maxLength(255),
-                    ])->columns(3),
+                    ])->columns(2),
 
                 Section::make(__('filament-satis::package.sections.credentials'))
                     ->schema([
@@ -44,7 +69,9 @@ class PackageForm
                         TextInput::make('password')
                             ->label(__('filament-satis::package.fields.password'))
                             ->password()
-                            ->maxLength(255),
+                            ->revealable()
+                            ->maxLength(255)
+                            ->dehydrated(fn (?string $state): bool => filled($state)),
                     ])->columns(2),
 
                 Section::make(__('filament-satis::package.sections.integration'))
@@ -52,14 +79,12 @@ class PackageForm
                         TextInput::make('webhook_secret')
                             ->label(__('filament-satis::package.fields.webhook_secret'))
                             ->disabled()
-                            ->dehydrated(false)
-                            ->visibleOn('edit'),
+                            ->dehydrated(false),
 
                         TextInput::make('reference')
                             ->label(__('filament-satis::package.fields.reference'))
                             ->disabled()
-                            ->dehydrated(false)
-                            ->visibleOn('edit'),
+                            ->dehydrated(false),
                     ])->columns(2)
                     ->visibleOn('edit'),
             ]);

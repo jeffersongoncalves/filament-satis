@@ -16,12 +16,15 @@ class DependencyInfolist
                     ->schema([
                         TextEntry::make('name')
                             ->label(__('filament-satis::dependency.fields.name')),
+
                         TextEntry::make('type')
                             ->label(__('filament-satis::dependency.fields.type'))
                             ->badge(),
+
                         TextEntry::make('versions')
                             ->label(__('filament-satis::dependency.fields.versions'))
-                            ->listWithLineBreaks()
+                            ->badge()
+                            ->separator(',')
                             ->columnSpanFull(),
                     ])->columns(2),
             ]);

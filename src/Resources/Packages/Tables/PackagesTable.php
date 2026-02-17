@@ -24,29 +24,41 @@ class PackagesTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('type')
-                    ->label(__('filament-satis::package.fields.type'))
-                    ->badge()
+                IconColumn::make('is_dev')
+                    ->label(__('filament-satis::package.fields.is_dev'))
+                    ->boolean()
                     ->sortable(),
-
-                TextColumn::make('url')
-                    ->label(__('filament-satis::package.fields.url'))
-                    ->limit(50)
-                    ->searchable(),
 
                 IconColumn::make('is_credentials_validated')
                     ->label(__('filament-satis::package.fields.is_credentials_validated'))
                     ->boolean()
                     ->sortable(),
 
-                TextColumn::make('credentials_validated_at')
-                    ->label(__('filament-satis::package.fields.credentials_validated_at'))
-                    ->dateTime()
+                TextColumn::make('releases_count')
+                    ->label(__('filament-satis::package-release.plural_model_label'))
+                    ->counts('releases')
+                    ->sortable(),
+
+                TextColumn::make('type')
+                    ->label(__('filament-satis::package.fields.type'))
+                    ->badge()
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('url')
+                    ->label(__('filament-satis::package.fields.url'))
+                    ->limit(50)
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
                     ->label(__('filament-satis::general.created_at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->label(__('filament-satis::general.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

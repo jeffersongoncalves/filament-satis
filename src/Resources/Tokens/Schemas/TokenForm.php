@@ -38,12 +38,15 @@ class TokenForm
                     ->schema([
                         Select::make('packages')
                             ->label(__('filament-satis::token.fields.packages'))
-                            ->relationship('packages', 'name')
+                            ->relationship(
+                                'packages',
+                                'name',
+                                fn ($query) => $query->where('is_credentials_validated', true)->orderBy('name')
+                            )
                             ->multiple()
                             ->preload()
                             ->searchable(),
-                    ])
-                    ->visibleOn('edit'),
+                    ]),
             ]);
     }
 }
