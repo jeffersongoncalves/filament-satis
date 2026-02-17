@@ -234,19 +234,19 @@ class PackageResource extends Resource
 
                 Tables\Columns\TextColumn::make('credentials_validated_at')
                     ->label(__('filament-satis::package.fields.credentials_validated_at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('filament-satis::general.updated_at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('filament-satis::general.created_at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -301,7 +301,7 @@ class PackageResource extends Resource
                             ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('credentials_validated_at')
                             ->label(__('filament-satis::package.fields.credentials_validated_at'))
-                            ->dateTime()
+                            ->since()
                             ->columnSpanFull(),
                     ]),
                 Infolists\Components\Section::make(__('filament-satis::package.sections.webhook'))

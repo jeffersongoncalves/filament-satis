@@ -97,7 +97,7 @@ class PackageReleaseResource extends Resource
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('filament-satis::general.created_at'))
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
