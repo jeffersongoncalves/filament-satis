@@ -15,6 +15,8 @@ use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\RelationManagers;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
+use function JeffersonGoncalves\FilamentSatis\Support\enum_equals;
+
 class PackageResource extends Resource
 {
     public static function getModel(): string
@@ -77,76 +79,120 @@ class PackageResource extends Resource
         return $form
             ->columns(null)
             ->schema([
-                Forms\Components\Section::make(__('filament-satis::package.sections.general'))
+                Forms\Components\TextInput::make('name')
+                    ->label(
+                        fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
+                            PackageType::Github => 'user/repo',
+                            default => 'vendor/package',
+                        }
+                    )
+                    ->rule(
+                        fn (Forms\Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
+                            if (enum_equals($get('type'), PackageType::Composer)) {
+                                if (preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9]([_.-]?[a-z0-9]+)*$/', $value)) {
+                                    return;
+                                }
+
+                                $fail(__('filament-satis::package.validation.composer_name'));
+                            }
+
+                            if (enum_equals($get('type'), PackageType::Github)) {
+                                if (preg_match('/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/', $value)) {
+                                    return;
+                                }
+
+                                $fail(__('filament-satis::package.validation.github_name'));
+                            }
+                        },
+                    )
+                    ->required()
+                    ->disabled(fn ($context) => $context === 'edit'),
+
+                Forms\Components\Toggle::make('is_dev')
+                    ->label(__('filament-satis::package.fields.is_dev'))
+                    ->default(false),
+
+                Forms\Components\ToggleButtons::make('type')
+                    ->hidden(fn ($context): bool => $context === 'edit')
+                    ->hiddenLabel()
+                    ->live()
+                    ->options(PackageType::class)
+                    ->default(PackageType::Composer)
+                    ->required()
+                    ->disabled(fn ($context) => $context === 'edit'),
+
+                Forms\Components\Fieldset::make()
+                    ->columns()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('filament-satis::package.fields.name'))
-                            ->required()
-                            ->maxLength(255)
-                            ->placeholder('vendor/package')
-                            ->disabled(fn (string $operation): bool => $operation === 'edit')
-                            ->rules([
-                                fn (Forms\Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                                    $type = $get('type');
-                                    if ($type === PackageType::Composer->value || $type === PackageType::Composer) {
-                                        if (! preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9]([_.-]?[a-z0-9]+)*$/', $value)) {
-                                            $fail(__('filament-satis::package.validation.composer_name'));
-                                        }
-                                    } elseif ($type === PackageType::Github->value || $type === PackageType::Github) {
-                                        if (! preg_match('/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/', $value)) {
-                                            $fail(__('filament-satis::package.validation.github_name'));
-                                        }
-                                    }
-                                },
-                            ]),
+                        Forms\Components\Placeholder::make('instructions_composer')
+                            ->label(__('filament-satis::package.instructions.composer.label'))
+                            ->content(fn () => __('filament-satis::package.instructions.composer.content'))
+                            ->visible(fn (Forms\Get $get): bool => enum_equals($get('type'), PackageType::Composer))
+                            ->columnSpanFull(),
 
-                        Forms\Components\Toggle::make('is_dev')
-                            ->label(__('filament-satis::package.fields.is_dev'))
-                            ->default(false),
-
-                        Forms\Components\ToggleButtons::make('type')
-                            ->label(__('filament-satis::package.fields.type'))
-                            ->options(PackageType::class)
-                            ->required()
-                            ->default(PackageType::Composer)
-                            ->inline()
-                            ->grouped()
-                            ->live(),
+                        Forms\Components\Placeholder::make('instructions_github')
+                            ->label(__('filament-satis::package.instructions.github.label'))
+                            ->content(fn () => __('filament-satis::package.instructions.github.content'))
+                            ->visible(fn (Forms\Get $get): bool => enum_equals($get('type'), PackageType::Github))
+                            ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('url')
-                            ->label(__('filament-satis::package.fields.url'))
-                            ->required()
-                            ->url()
-                            ->maxLength(255),
-                    ])->columns(2),
+                            ->label(
+                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
+                                    PackageType::Github => __('filament-satis::package.form.url.github'),
+                                    default => __('filament-satis::package.form.url.composer'),
+                                }
+                            )
+                            ->rule(
+                                fn (Forms\Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
+                                    if (! enum_equals($get('type'), PackageType::Github)) {
+                                        return filter_var($value, FILTER_VALIDATE_URL);
+                                    }
 
-                Forms\Components\Section::make(__('filament-satis::package.sections.credentials'))
-                    ->schema([
+                                    if (preg_match('/^git@github.com:/', $value)) {
+                                        return;
+                                    }
+
+                                    $fail(__('filament-satis::package.validation.github_url'));
+                                },
+                            )
+                            ->required()
+                            ->columnSpanFull(),
+
                         Forms\Components\TextInput::make('username')
-                            ->label(__('filament-satis::package.fields.username'))
-                            ->maxLength(255),
+                            ->label(
+                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
+                                    PackageType::Github => __('filament-satis::package.form.username.github'),
+                                    default => __('filament-satis::package.form.username.composer'),
+                                }
+                            )
+                            ->required(),
 
                         Forms\Components\TextInput::make('password')
-                            ->label(__('filament-satis::package.fields.password'))
+                            ->label(
+                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
+                                    PackageType::Github => __('filament-satis::package.form.password.github'),
+                                    default => __('filament-satis::package.form.password.composer'),
+                                }
+                            )
                             ->password()
                             ->revealable()
-                            ->maxLength(255)
-                            ->dehydrated(fn (?string $state): bool => filled($state)),
-                    ])->columns(2),
+                            ->rule(
+                                fn (Forms\Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
+                                    if (! enum_equals($get('type'), PackageType::Github)) {
+                                        return;
+                                    }
 
-                Forms\Components\Section::make(__('filament-satis::package.sections.integration'))
-                    ->schema([
-                        Forms\Components\TextInput::make('webhook_secret')
-                            ->label(__('filament-satis::package.fields.webhook_secret'))
-                            ->disabled()
-                            ->dehydrated(false),
+                                    if (preg_match('/^github_pat_/', $value)) {
+                                        return;
+                                    }
 
-                        Forms\Components\TextInput::make('reference')
-                            ->label(__('filament-satis::package.fields.reference'))
-                            ->disabled()
-                            ->dehydrated(false),
-                    ])->columns(2)
-                    ->visibleOn('edit'),
+                                    $fail(__('filament-satis::package.validation.github_token'));
+                                },
+                            )
+                            ->required(fn (string $context): bool => $context === 'create')
+                            ->dehydrated(fn ($state) => filled($state)),
+                    ]),
             ]);
     }
 
