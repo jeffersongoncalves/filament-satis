@@ -79,6 +79,7 @@ class PackageInfolist
                                     ->columnSpanFull(),
                                 TextEntry::make('time')
                                     ->label(__('filament-satis::package-release.fields.time'))
+                                    ->since()
                                     ->columnSpanFull()
                                     ->hidden(fn ($state) => blank($state)),
                                 TextEntry::make('type')

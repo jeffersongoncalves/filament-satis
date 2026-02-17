@@ -27,7 +27,8 @@ class PackageReleaseInfolist
                             ->label(__('filament-satis::package-release.fields.type')),
 
                         TextEntry::make('time')
-                            ->label(__('filament-satis::package-release.fields.time')),
+                            ->label(__('filament-satis::package-release.fields.time'))
+                            ->since(),
 
                         TextEntry::make('description')
                             ->label(__('filament-satis::package-release.fields.description'))

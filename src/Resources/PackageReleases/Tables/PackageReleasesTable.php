@@ -34,6 +34,7 @@ class PackageReleasesTable
 
                 TextColumn::make('time')
                     ->label(__('filament-satis::package-release.fields.time'))
+                    ->since()
                     ->sortable(),
 
                 TextColumn::make('created_at')
