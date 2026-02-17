@@ -12,6 +12,8 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
 
+use function JeffersonGoncalves\FilamentSatis\Support\enum_equals;
+
 class PackageForm
 {
     public static function configure(Schema $schema): Schema
