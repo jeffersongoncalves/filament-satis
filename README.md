@@ -47,7 +47,7 @@ This will automatically install `jeffersongoncalves/laravel-satis` as a dependen
 ### 2. Publish and run migrations
 
 ```bash
-php artisan vendor:publish --tag="laravel-satis-migrations"
+php artisan vendor:publish --tag="satis-migrations"
 php artisan migrate
 ```
 
@@ -55,7 +55,7 @@ php artisan migrate
 
 ```bash
 php artisan vendor:publish --tag="filament-satis-config"
-php artisan vendor:publish --tag="laravel-satis-config"
+php artisan vendor:publish --tag="satis-config"
 ```
 
 ## Quick Start

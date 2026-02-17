@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.0.1 - 2026-02-17
+
+### Fixed
+
+- Corrected `vendor:publish` tag names for `laravel-satis` dependency (`satis-config` and `satis-migrations`)
+
 ## 3.0.0 - Unreleased
 
 ### Upgrading from 2.x
