@@ -222,9 +222,9 @@ class PackageResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables\Columns\TextColumn::make('releases_count')
-                    ->label(__('filament-satis::package.fields.releases_count'))
-                    ->counts('releases')
+                Tables\Columns\TextColumn::make('package_releases_count')
+                    ->label(__('filament-satis::package-release.plural_model_label'))
+                    ->counts('packageReleases')
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_credentials_validated')
