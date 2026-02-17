@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.4.0 - 2026-02-17
+
+### Feature
+
+- Replace `dateTime()` with `since()` (diffForHumans) on all datetime columns and entries
+
 ## 3.4.0 - 2026-02-17
 
 ### Feature
