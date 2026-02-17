@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.1.0 - 2026-02-17
+
+### What's Changed
+
+#### New Features
+
+- Add **Infolists** to all Resources (Package, Token, PackageRelease, PackageDownload, Dependency)
+- Add **Global Search** support to PackageResource, TokenResource, PackageReleaseResource, DependencyResource
+- Add **is_dev** toggle field to PackageResource form and table
+- Add **ToggleButtons** for package type with dynamic name validation (Composer vs GitHub)
+- Add **ValidateCredentials** action on EditPackage page
+- Add **SyncTenantPackages** job dispatch on package create/edit
+- Add **SyncTokenPackages** job dispatch on token create/edit
+- Add **ViewPackageDownload** page
+- Add **slideOver ViewAction** to all RelationManagers (Releases, Downloads, PackageReleases)
+- Add **badges** to version, downloads, and type columns across tables
+- Add **dependencies count** column to PackageReleasesTable and ReleasesRelationManager
+- Add **versions badges** to DependenciesTable and DependencyInfolist
+- Add **combined relation manager tabs** on ViewPackage and ViewDependency pages
+- Add filtered packages select on TokenForm (only validated packages, ordered by name)
+- Add **pt_BR** and **en** translations for new fields, actions, and notifications
+- Bump laravel-satis requirement to `^1.7`
+
+#### Documentation
+
+- Update README with Version Compatibility table, new features, and commands
+- Update SKILL.md with complete resource documentation
+- Update core.blade.php guidelines
+
+**Full Changelog**: https://github.com/jeffersongoncalves/filament-satis/compare/2.0.2...2.1.0
+
 ## 2.0.2 - 2026-02-17
 
 ### Changed
