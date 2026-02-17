@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.5.0 - 2026-02-17
+
+### Feature
+
+- Add `since()` (diffForHumans) to `time` columns and entries (package releases)
+- Require `laravel-satis ^1.11` (datetime cast on `PackageRelease::time`)
+
 ## 3.5.0 - 2026-02-17
 
 ### Feature
