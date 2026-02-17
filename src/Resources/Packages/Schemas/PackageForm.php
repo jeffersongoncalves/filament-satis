@@ -23,8 +23,8 @@ class PackageForm
             ->components([
                 TextInput::make('name')
                     ->label(
-                        fn (Get $get) => match (PackageType::tryFrom($get('type'))) {
-                            PackageType::Github => 'user/repo',
+                        fn (Get $get) => match (true) {
+                            enum_equals($get('type'), PackageType::Github) => 'user/repo',
                             default => 'vendor/package',
                         }
                     )
@@ -78,8 +78,8 @@ class PackageForm
 
                         TextInput::make('url')
                             ->label(
-                                fn (Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.url.github'),
+                                fn (Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.url.github'),
                                     default => __('filament-satis::package.form.url.composer'),
                                 }
                             )
@@ -101,8 +101,8 @@ class PackageForm
 
                         TextInput::make('username')
                             ->label(
-                                fn (Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.username.github'),
+                                fn (Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.username.github'),
                                     default => __('filament-satis::package.form.username.composer'),
                                 }
                             )
@@ -110,8 +110,8 @@ class PackageForm
 
                         TextInput::make('password')
                             ->label(
-                                fn (Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.password.github'),
+                                fn (Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.password.github'),
                                     default => __('filament-satis::package.form.password.composer'),
                                 }
                             )
