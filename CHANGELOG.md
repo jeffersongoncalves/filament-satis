@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.6.0 - 2026-02-17
+
+### Feature
+
+- Add `validateCredentials` action to View page and Table (record action)
+- Hide validate button when credentials are already validated
+
 ## 3.6.0 - 2026-02-17
 
 ### Feature
