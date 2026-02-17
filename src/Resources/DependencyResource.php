@@ -112,6 +112,7 @@ class DependencyResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
+            ->columns(null)
             ->schema([
                 Infolists\Components\Section::make()
                     ->schema([

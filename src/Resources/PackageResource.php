@@ -76,6 +76,7 @@ class PackageResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(null)
             ->schema([
                 Forms\Components\Section::make(__('filament-satis::package.sections.general'))
                     ->schema([

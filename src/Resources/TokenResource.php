@@ -72,6 +72,7 @@ class TokenResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(null)
             ->schema([
                 Forms\Components\Section::make(__('filament-satis::token.sections.general'))
                     ->schema([
@@ -146,6 +147,7 @@ class TokenResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
+            ->columns(null)
             ->schema([
                 Infolists\Components\Section::make(__('filament-satis::token.sections.general'))
                     ->schema([
