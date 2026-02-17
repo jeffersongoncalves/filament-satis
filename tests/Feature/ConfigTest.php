@@ -65,12 +65,12 @@ it('has dependency_resource config with all keys', function () {
     expect($config['slug'])->toBe('satis/dependencies');
 });
 
-it('loads laravel-satis config as dependency', function () {
-    expect(config('laravel-satis'))->toBeArray();
+it('loads satis config as dependency', function () {
+    expect(config('satis'))->toBeArray();
 });
 
-it('laravel-satis has default models configured', function () {
-    $models = config('laravel-satis.models');
+it('satis has default models configured', function () {
+    $models = config('satis.models');
 
     expect($models)->toBeArray()
         ->and($models['package'])->toBe(\JeffersonGoncalves\LaravelSatis\Models\Package::class)

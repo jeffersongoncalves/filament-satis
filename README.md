@@ -186,7 +186,7 @@ return [
 
 ### Laravel Satis Config
 
-The `config/laravel-satis.php` file configures the core backend:
+The `config/satis.php` file configures the core backend:
 
 ```php
 return [
@@ -302,7 +302,7 @@ The plugin registers 5 Filament resources:
 ### Override model classes
 
 ```php
-// config/laravel-satis.php
+// config/satis.php
 'models' => [
     'package' => \App\Models\CustomPackage::class,
 ],

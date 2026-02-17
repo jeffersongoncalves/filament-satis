@@ -46,7 +46,7 @@ $panel->plugin(
 ```
 
 The plugin automatically:
-1. Sets `laravel-satis.tenancy.enabled` to `true` during `register()`
+1. Sets `satis.tenancy.enabled` to `true` during `register()`
 2. Configures the tenant resolver to use `filament()->getTenant()` during `boot()`
 3. Registers all 5 resources in the panel
 
@@ -324,7 +324,7 @@ public static function getModel(): string
 }
 ```
 
-This allows users to override model classes via `config/laravel-satis.php`:
+This allows users to override model classes via `config/satis.php`:
 
 ```php
 'models' => [

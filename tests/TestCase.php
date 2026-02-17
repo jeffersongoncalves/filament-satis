@@ -40,10 +40,10 @@ abstract class TestCase extends BaseTestCase
             'prefix' => '',
         ]);
 
-        // Load laravel-satis config manually for testing
-        $laravelSatisConfig = __DIR__.'/../vendor/jeffersongoncalves/laravel-satis/config/laravel-satis.php';
-        if (file_exists($laravelSatisConfig)) {
-            $app['config']->set('laravel-satis', require $laravelSatisConfig);
+        // Load satis config manually for testing
+        $satisConfig = __DIR__.'/../vendor/jeffersongoncalves/laravel-satis/config/satis.php';
+        if (file_exists($satisConfig)) {
+            $app['config']->set('satis', require $satisConfig);
         }
     }
 
