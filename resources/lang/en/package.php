@@ -38,9 +38,37 @@ return [
         'webhook_secret' => 'Webhook secret copied successfully!',
     ],
 
+    'form' => [
+        'url' => [
+            'composer' => 'Repository URL',
+            'github' => 'SSH URL',
+        ],
+        'username' => [
+            'composer' => 'Username',
+            'github' => 'GitHub Username',
+        ],
+        'password' => [
+            'composer' => 'Password',
+            'github' => 'Personal Access Token (PAT)',
+        ],
+    ],
+
+    'instructions' => [
+        'composer' => [
+            'label' => 'Instructions',
+            'content' => 'Enter the Composer repository URL and authentication credentials.',
+        ],
+        'github' => [
+            'label' => 'Instructions',
+            'content' => 'Use the SSH URL (git@github.com:user/repo.git) and a Personal Access Token (PAT) starting with github_pat_.',
+        ],
+    ],
+
     'validation' => [
         'composer_name' => 'The name must be in the format vendor/package (lowercase, alphanumeric).',
         'github_name' => 'The name must be in the format owner/repository.',
+        'github_url' => 'The URL must be a valid SSH URL (git@github.com:user/repo.git).',
+        'github_token' => 'The token must be a valid GitHub Personal Access Token (starting with github_pat_).',
     ],
 
     'actions' => [
