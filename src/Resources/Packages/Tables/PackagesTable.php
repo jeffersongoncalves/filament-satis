@@ -34,9 +34,9 @@ class PackagesTable
                     ->boolean()
                     ->sortable(),
 
-                TextColumn::make('releases_count')
+                TextColumn::make('package_releases_count')
                     ->label(__('filament-satis::package-release.plural_model_label'))
-                    ->counts('releases')
+                    ->counts('packageReleases')
                     ->sortable(),
 
                 TextColumn::make('type')
