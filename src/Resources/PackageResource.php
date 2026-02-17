@@ -81,9 +81,9 @@ class PackageResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label(
-                        fn (Forms\Get $get) => match (true) {
-                            enum_equals($get('type'), PackageType::Github) => 'user/repo',
-                            default => 'vendor/package',
+                        fn (Forms\Get $get) => match (PackageType::of($get('type'))) {
+                            PackageType::Composer => 'vendor/package',
+                            PackageType::Github => 'user/repo',
                         }
                     )
                     ->rule(
@@ -138,9 +138,9 @@ class PackageResource extends Resource
 
                         Forms\Components\TextInput::make('url')
                             ->label(
-                                fn (Forms\Get $get) => match (true) {
-                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.url.github'),
-                                    default => __('filament-satis::package.form.url.composer'),
+                                fn (Forms\Get $get) => match (PackageType::of($get('type'))) {
+                                    PackageType::Composer => __('filament-satis::package.form.url.composer'),
+                                    PackageType::Github => __('filament-satis::package.form.url.github'),
                                 }
                             )
                             ->rule(
@@ -161,18 +161,18 @@ class PackageResource extends Resource
 
                         Forms\Components\TextInput::make('username')
                             ->label(
-                                fn (Forms\Get $get) => match (true) {
-                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.username.github'),
-                                    default => __('filament-satis::package.form.username.composer'),
+                                fn (Forms\Get $get) => match (PackageType::of($get('type'))) {
+                                    PackageType::Composer => __('filament-satis::package.form.username.composer'),
+                                    PackageType::Github => __('filament-satis::package.form.username.github'),
                                 }
                             )
                             ->required(),
 
                         Forms\Components\TextInput::make('password')
                             ->label(
-                                fn (Forms\Get $get) => match (true) {
-                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.password.github'),
-                                    default => __('filament-satis::package.form.password.composer'),
+                                fn (Forms\Get $get) => match (PackageType::of($get('type'))) {
+                                    PackageType::Composer => __('filament-satis::package.form.password.composer'),
+                                    PackageType::Github => __('filament-satis::package.form.password.github'),
                                 }
                             )
                             ->password()
