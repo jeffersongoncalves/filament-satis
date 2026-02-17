@@ -25,7 +25,10 @@ class FilamentSatisPlugin implements Plugin
 
     public static function get(): static
     {
-        return filament(app(static::class)->getId());
+        /** @var static $plugin */
+        $plugin = filament(app(static::class)->getId());
+
+        return $plugin;
     }
 
     public function getId(): string
