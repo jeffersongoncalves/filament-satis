@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.3.3 - 2026-02-17
+
+### Fix
+
+- Update relationship names to match laravel-satis rename (`releases` → `packageReleases`, `downloads` → `packageDownloads`)
+
 ## 2.3.3 - 2026-02-17
 
 ### Fix
