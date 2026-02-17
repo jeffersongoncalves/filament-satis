@@ -2,6 +2,8 @@
 
 namespace JeffersonGoncalves\FilamentSatis\Resources;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -71,26 +73,51 @@ class PackageDownloadResource extends Resource
 
                 Tables\Columns\TextColumn::make('version')
                     ->label(__('filament-satis::package-download.fields.version'))
+                    ->badge()
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('downloads')
                     ->label(__('filament-satis::package-download.fields.downloads'))
+                    ->badge()
                     ->numeric()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('filament-satis::general.updated_at'))
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('filament-satis::general.created_at'))
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
             ])
             ->defaultSort('downloads', 'desc');
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make()
+                    ->schema([
+                        Infolists\Components\TextEntry::make('package.name')
+                            ->label(__('filament-satis::package-download.fields.package')),
+                        Infolists\Components\TextEntry::make('version')
+                            ->label(__('filament-satis::package-download.fields.version'))
+                            ->badge(),
+                        Infolists\Components\TextEntry::make('downloads')
+                            ->label(__('filament-satis::package-download.fields.downloads'))
+                            ->badge(),
+                    ])->columns(2),
+            ]);
     }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListPackageDownloads::route('/'),
+            'view' => Pages\ViewPackageDownload::route('/{record}'),
         ];
     }
 }

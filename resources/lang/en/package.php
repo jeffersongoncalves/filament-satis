@@ -9,6 +9,7 @@ return [
         'general' => 'General Information',
         'credentials' => 'Credentials',
         'integration' => 'Integration',
+        'webhook' => 'Webhook',
     ],
 
     'fields' => [
@@ -21,5 +22,21 @@ return [
         'reference' => 'Reference',
         'is_credentials_validated' => 'Validated',
         'credentials_validated_at' => 'Validated At',
+        'is_dev' => 'Development',
+        'releases_count' => 'Releases',
+    ],
+
+    'validation' => [
+        'composer_name' => 'The name must be a valid Composer package name (vendor/package).',
+        'github_name' => 'The name must be a valid GitHub repository (owner/repo).',
+    ],
+
+    'actions' => [
+        'validate_credentials' => 'Validate Credentials',
+    ],
+
+    'notifications' => [
+        'credentials_valid' => 'Credentials are valid.',
+        'credentials_invalid' => 'Credentials are invalid.',
     ],
 ];

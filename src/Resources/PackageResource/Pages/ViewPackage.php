@@ -16,4 +16,9 @@ class ViewPackage extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
+    public function hasCombinedRelationManagerTabsWithContent(): bool
+    {
+        return true;
+    }
 }

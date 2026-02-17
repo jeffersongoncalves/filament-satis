@@ -4,6 +4,8 @@ namespace JeffersonGoncalves\FilamentSatis\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -62,6 +64,11 @@ class TokenResource extends Resource
         return __('filament-satis::token.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -91,12 +98,11 @@ class TokenResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('packages')
                             ->label(__('filament-satis::token.fields.packages'))
-                            ->relationship('packages', 'name')
+                            ->relationship('packages', 'name', fn ($query) => $query->where('is_credentials_validated', true)->orderBy('name'))
                             ->multiple()
                             ->preload()
                             ->searchable(),
-                    ])
-                    ->visibleOn('edit'),
+                    ]),
             ]);
     }
 
@@ -134,6 +140,32 @@ class TokenResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make(__('filament-satis::token.sections.general'))
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name')
+                            ->label(__('filament-satis::token.fields.name')),
+                        Infolists\Components\TextEntry::make('email')
+                            ->label(__('filament-satis::token.fields.email')),
+                        Infolists\Components\TextEntry::make('token')
+                            ->label(__('filament-satis::token.fields.token'))
+                            ->copyable()
+                            ->columnSpanFull(),
+                    ])->columns(2),
+
+                Infolists\Components\Section::make(__('filament-satis::token.sections.packages'))
+                    ->schema([
+                        Infolists\Components\TextEntry::make('packages.name')
+                            ->label(__('filament-satis::token.fields.packages'))
+                            ->listWithLineBreaks()
+                            ->bulleted(),
+                    ]),
             ]);
     }
 

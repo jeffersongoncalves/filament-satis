@@ -34,5 +34,5 @@ it('has pages defined', function () {
     $pages = PackageDownloadResource::getPages();
 
     expect($pages)->toBeArray()
-        ->toHaveKeys(['index']);
+        ->toHaveKeys(['index', 'view']);
 });

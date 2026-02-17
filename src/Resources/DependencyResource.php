@@ -64,6 +64,11 @@ class DependencyResource extends Resource
         return __('filament-satis::dependency.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -77,6 +82,11 @@ class DependencyResource extends Resource
                     ->label(__('filament-satis::dependency.fields.type'))
                     ->badge()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('versions')
+                    ->label(__('filament-satis::dependency.fields.versions'))
+                    ->badge()
+                    ->separator(','),
 
                 Tables\Columns\TextColumn::make('package_releases_count')
                     ->label(__('filament-satis::dependency.fields.releases_count'))
@@ -112,7 +122,8 @@ class DependencyResource extends Resource
                             ->badge(),
                         Infolists\Components\TextEntry::make('versions')
                             ->label(__('filament-satis::dependency.fields.versions'))
-                            ->listWithLineBreaks()
+                            ->badge()
+                            ->separator(',')
                             ->columnSpanFull(),
                     ])->columns(2),
             ]);

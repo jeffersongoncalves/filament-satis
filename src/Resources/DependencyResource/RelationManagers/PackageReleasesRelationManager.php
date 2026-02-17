@@ -2,6 +2,8 @@
 
 namespace JeffersonGoncalves\FilamentSatis\Resources\DependencyResource\RelationManagers;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,6 +17,24 @@ class PackageReleasesRelationManager extends RelationManager
         return __('filament-satis::package-release.plural_model_label');
     }
 
+    public function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make()
+                    ->schema([
+                        Infolists\Components\TextEntry::make('package.name')
+                            ->label(__('filament-satis::package-release.fields.package')),
+                        Infolists\Components\TextEntry::make('version')
+                            ->label(__('filament-satis::package-release.fields.version'))
+                            ->badge(),
+                        Infolists\Components\TextEntry::make('pivot.version')
+                            ->label(__('filament-satis::dependency.fields.constraint'))
+                            ->badge(),
+                    ])->columns(2),
+            ]);
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -25,16 +45,22 @@ class PackageReleasesRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('version')
                     ->label(__('filament-satis::package-release.fields.version'))
+                    ->badge()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('pivot.version')
                     ->label(__('filament-satis::dependency.fields.constraint'))
+                    ->badge()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('filament-satis::general.created_at'))
                     ->dateTime()
                     ->sortable(),
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
             ])
             ->defaultSort('created_at', 'desc');
     }

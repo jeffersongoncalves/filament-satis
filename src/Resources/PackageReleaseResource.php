@@ -62,6 +62,11 @@ class PackageReleaseResource extends Resource
         return __('filament-satis::package-release.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['version'];
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -73,11 +78,17 @@ class PackageReleaseResource extends Resource
 
                 Tables\Columns\TextColumn::make('version')
                     ->label(__('filament-satis::package-release.fields.version'))
+                    ->badge()
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('filament-satis::package-release.fields.type'))
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('dependencies_count')
+                    ->label(__('filament-satis::package-release.fields.dependencies_count'))
+                    ->counts('dependencies')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('time')
@@ -105,7 +116,8 @@ class PackageReleaseResource extends Resource
                         Infolists\Components\TextEntry::make('package.name')
                             ->label(__('filament-satis::package-release.fields.package')),
                         Infolists\Components\TextEntry::make('version')
-                            ->label(__('filament-satis::package-release.fields.version')),
+                            ->label(__('filament-satis::package-release.fields.version'))
+                            ->badge(),
                         Infolists\Components\TextEntry::make('type')
                             ->label(__('filament-satis::package-release.fields.type')),
                         Infolists\Components\TextEntry::make('time')
@@ -115,8 +127,21 @@ class PackageReleaseResource extends Resource
                             ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('homepage')
                             ->label(__('filament-satis::package-release.fields.homepage'))
-                            ->url(fn ($state) => $state),
+                            ->url(fn ($state) => $state)
+                            ->openUrlInNewTab(),
                     ])->columns(2),
+
+                Infolists\Components\Section::make(__('filament-satis::package-release.sections.dependencies'))
+                    ->schema([
+                        Infolists\Components\RepeatableEntry::make('dependencies')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('name')
+                                    ->label(__('filament-satis::dependency.fields.name')),
+                                Infolists\Components\TextEntry::make('pivot.version')
+                                    ->label(__('filament-satis::dependency.fields.constraint'))
+                                    ->badge(),
+                            ])->columns(2),
+                    ])->collapsible(),
             ]);
     }
 

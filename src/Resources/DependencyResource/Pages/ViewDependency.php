@@ -8,4 +8,9 @@ use JeffersonGoncalves\FilamentSatis\Resources\DependencyResource;
 class ViewDependency extends ViewRecord
 {
     protected static string $resource = DependencyResource::class;
+
+    public function hasCombinedRelationManagerTabsWithContent(): bool
+    {
+        return true;
+    }
 }
