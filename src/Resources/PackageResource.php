@@ -333,6 +333,7 @@ class PackageResource extends Resource
                                     ->columnSpanFull(),
                                 Infolists\Components\TextEntry::make('time')
                                     ->label(__('filament-satis::package-release.fields.time'))
+                                    ->since()
                                     ->columnSpanFull()
                                     ->hidden(fn ($state) => blank($state)),
                                 Infolists\Components\TextEntry::make('type')

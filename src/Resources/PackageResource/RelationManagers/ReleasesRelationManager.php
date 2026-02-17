@@ -30,7 +30,8 @@ class ReleasesRelationManager extends RelationManager
                         Infolists\Components\TextEntry::make('type')
                             ->label(__('filament-satis::package-release.fields.type')),
                         Infolists\Components\TextEntry::make('time')
-                            ->label(__('filament-satis::package-release.fields.time')),
+                            ->label(__('filament-satis::package-release.fields.time'))
+                            ->since(),
                         Infolists\Components\TextEntry::make('dependencies_count')
                             ->label(__('filament-satis::package-release.fields.dependencies_count'))
                             ->state(fn ($record) => $record->dependencies()->count()),
@@ -67,6 +68,7 @@ class ReleasesRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('time')
                     ->label(__('filament-satis::package-release.fields.time'))
+                    ->since()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
