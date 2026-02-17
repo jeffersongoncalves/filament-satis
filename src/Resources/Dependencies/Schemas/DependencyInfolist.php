@@ -11,6 +11,7 @@ class DependencyInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(null)
             ->components([
                 Section::make()
                     ->schema([
