@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.3.1 - 2026-02-17
+
+### Fixed
+
+- Fix TypeError: use enum_equals in match expressions instead of PackageType::tryFrom() which fails when $get('type') returns a BackedEnum instance
+
 ## 2.3.0 - 2026-02-17
 
 ### Added
