@@ -21,19 +21,13 @@ class TokenForm
                             ->required()
                             ->maxLength(255),
 
-                        TextInput::make('email')
-                            ->label(__('filament-satis::token.fields.email'))
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-
                         TextInput::make('token')
                             ->label(__('filament-satis::token.fields.token'))
                             ->disabled()
                             ->dehydrated(false)
                             ->visibleOn('edit')
                             ->columnSpanFull(),
-                    ])->columns(2),
+                    ]),
 
                 Section::make(__('filament-satis::token.sections.packages'))
                     ->schema([
