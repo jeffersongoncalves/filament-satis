@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.0.2 - 2026-02-17
+
+### Changed
+
+- Updated all config references from `config/laravel-satis.php` to `config/satis.php` to match `laravel-satis` v1.3.5
+- Updated `FilamentSatisPlugin` to use `satis.*` config keys instead of `laravel-satis.*`
+
 ## 3.0.1 - 2026-02-17
 
 ### Fixed

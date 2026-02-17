@@ -65,9 +65,9 @@ class FilamentSatisPlugin implements Plugin
     {
         if ($this->multiTenancy) {
             config([
-                'laravel-satis.tenancy.enabled' => true,
-                'laravel-satis.tenancy.model' => $this->tenantModel,
-                'laravel-satis.tenancy.foreign_key' => $this->tenantForeignKey,
+                'satis.tenancy.enabled' => true,
+                'satis.tenancy.model' => $this->tenantModel,
+                'satis.tenancy.foreign_key' => $this->tenantForeignKey,
             ]);
         }
 
@@ -83,7 +83,7 @@ class FilamentSatisPlugin implements Plugin
     public function boot(Panel $panel): void
     {
         if ($this->multiTenancy) {
-            config(['laravel-satis.tenancy.resolver' => function () {
+            config(['satis.tenancy.resolver' => function () {
                 return filament()->getTenant()?->getKey();
             }]);
         }
