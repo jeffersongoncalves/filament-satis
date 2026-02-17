@@ -4,8 +4,11 @@ namespace JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads;
 
 use Filament\Panel;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\Pages\ListPackageDownloads;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\Pages\ViewPackageDownload;
+use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\Schemas\PackageDownloadInfolist;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\Tables\PackageDownloadsTable;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
@@ -66,10 +69,16 @@ class PackageDownloadResource extends Resource
         return PackageDownloadsTable::configure($table);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return PackageDownloadInfolist::configure($schema);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => ListPackageDownloads::route('/'),
+            'view' => ViewPackageDownload::route('/{record}'),
         ];
     }
 }

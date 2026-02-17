@@ -65,6 +65,11 @@ class DependencyResource extends Resource
         return __('filament-satis::dependency.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function table(Table $table): Table
     {
         return DependenciesTable::configure($table);

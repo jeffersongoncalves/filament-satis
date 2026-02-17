@@ -6,6 +6,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use JeffersonGoncalves\FilamentSatis\Resources\Tokens\TokenResource;
+use JeffersonGoncalves\LaravelSatis\Jobs\SyncTokenPackages;
+use JeffersonGoncalves\LaravelSatis\Models\Token;
 
 class EditToken extends EditRecord
 {
@@ -17,5 +19,12 @@ class EditToken extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave(): void
+    {
+        /** @var Token $record */
+        $record = $this->record;
+        SyncTokenPackages::dispatch($record)->delay(now()->addSeconds(5));
     }
 }

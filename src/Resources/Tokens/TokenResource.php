@@ -11,6 +11,7 @@ use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Pages\EditToken;
 use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Pages\ListTokens;
 use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Pages\ViewToken;
 use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Schemas\TokenForm;
+use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Schemas\TokenInfolist;
 use JeffersonGoncalves\FilamentSatis\Resources\Tokens\Tables\TokensTable;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
@@ -66,9 +67,19 @@ class TokenResource extends Resource
         return __('filament-satis::token.plural_model_label');
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return TokenForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return TokenInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

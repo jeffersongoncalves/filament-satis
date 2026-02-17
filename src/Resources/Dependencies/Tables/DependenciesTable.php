@@ -24,6 +24,11 @@ class DependenciesTable
                     ->badge()
                     ->sortable(),
 
+                TextColumn::make('versions')
+                    ->label(__('filament-satis::dependency.fields.versions'))
+                    ->badge()
+                    ->separator(','),
+
                 TextColumn::make('package_releases_count')
                     ->label(__('filament-satis::dependency.fields.releases_count'))
                     ->counts('packageReleases')
