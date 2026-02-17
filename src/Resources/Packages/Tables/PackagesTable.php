@@ -2,16 +2,20 @@
 
 namespace JeffersonGoncalves\FilamentSatis\Resources\Packages\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use JeffersonGoncalves\LaravelSatis\Actions\ValidatePackageCredentials;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
+use JeffersonGoncalves\LaravelSatis\Models\Package;
 
 class PackagesTable
 {
@@ -68,6 +72,26 @@ class PackagesTable
                     ->options(PackageType::class),
             ])
             ->recordActions([
+                Action::make('validateCredentials')
+                    ->label(__('filament-satis::package.actions.validate_credentials'))
+                    ->icon('heroicon-o-check-badge')
+                    ->requiresConfirmation()
+                    ->visible(fn (Package $record) => ! $record->is_credentials_validated)
+                    ->action(function (Package $record) {
+                        $result = app(ValidatePackageCredentials::class)->execute($record);
+
+                        if ($result) {
+                            Notification::make()
+                                ->title(__('filament-satis::package.notifications.credentials_valid'))
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title(__('filament-satis::package.notifications.credentials_invalid'))
+                                ->danger()
+                                ->send();
+                        }
+                    }),
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
