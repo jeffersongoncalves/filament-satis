@@ -21,6 +21,7 @@ class PackageReleasesRelationManager extends RelationManager
     public function infolist(Schema $schema): Schema
     {
         return $schema
+            ->columns(null)
             ->components([
                 TextEntry::make('package.name')
                     ->label(__('filament-satis::package-release.fields.package')),

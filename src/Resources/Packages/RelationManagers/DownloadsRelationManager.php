@@ -21,6 +21,7 @@ class DownloadsRelationManager extends RelationManager
     public function infolist(Schema $schema): Schema
     {
         return $schema
+            ->columns(null)
             ->components([
                 TextEntry::make('version')
                     ->label(__('filament-satis::package-download.fields.version'))
