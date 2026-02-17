@@ -13,7 +13,6 @@ use Filament\Tables\Table;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\Pages;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\RelationManagers;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
-use JeffersonGoncalves\LaravelSatis\Models\Package;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageResource extends Resource
@@ -260,7 +259,7 @@ class PackageResource extends Resource
                             ->columnSpanFull(),
                     ]),
                 Infolists\Components\Section::make(__('filament-satis::package.sections.webhook'))
-                    ->visible(fn (Package $record): bool => $record->type === PackageType::Github)
+                    ->visible(fn ($record): bool => $record?->type === PackageType::Github)
                     ->schema([
                         Infolists\Components\TextEntry::make('webhook_url')
                             ->label(__('filament-satis::package.infolist.webhook_url'))
