@@ -7,12 +7,15 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\Pages;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\RelationManagers;
+use JeffersonGoncalves\LaravelSatis\Actions\ValidatePackageCredentials;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
+use JeffersonGoncalves\LaravelSatis\Models\Package;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 use function JeffersonGoncalves\FilamentSatis\Support\enum_equals;
@@ -255,6 +258,26 @@ class PackageResource extends Resource
                     ->options(PackageType::class),
             ])
             ->actions([
+                Tables\Actions\Action::make('validateCredentials')
+                    ->label(__('filament-satis::package.actions.validate_credentials'))
+                    ->icon('heroicon-o-check-badge')
+                    ->requiresConfirmation()
+                    ->visible(fn (Package $record) => ! $record->is_credentials_validated)
+                    ->action(function (Package $record) {
+                        $result = app(ValidatePackageCredentials::class)->execute($record);
+
+                        if ($result) {
+                            Notification::make()
+                                ->title(__('filament-satis::package.notifications.credentials_valid'))
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title(__('filament-satis::package.notifications.credentials_invalid'))
+                                ->danger()
+                                ->send();
+                        }
+                    }),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

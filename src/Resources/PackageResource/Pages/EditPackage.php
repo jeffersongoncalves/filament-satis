@@ -21,6 +21,7 @@ class EditPackage extends EditRecord
                 ->label(__('filament-satis::package.actions.validate_credentials'))
                 ->icon('heroicon-o-check-badge')
                 ->requiresConfirmation()
+                ->visible(fn () => ! $this->getRecord()->getAttribute('is_credentials_validated'))
                 ->action(function () {
                     /** @var Package $record */
                     $record = $this->record;
