@@ -17,12 +17,26 @@ class TokenInfolist
                         TextEntry::make('name')
                             ->label(__('filament-satis::token.fields.name')),
 
-                        TextEntry::make('email')
-                            ->label(__('filament-satis::token.fields.email')),
-
                         TextEntry::make('token')
-                            ->label(__('filament-satis::token.fields.token'))
+                            ->label(__('filament-satis::token.infolist.token'))
                             ->copyable()
+                            ->copyMessage(__('filament-satis::token.copy_message.token'))
+                            ->copyMessageDuration(1500)
+                            ->columnSpanFull(),
+
+                        TextEntry::make('composer_command')
+                            ->label(__('filament-satis::token.infolist.composer_command'))
+                            ->copyable()
+                            ->copyMessage(__('filament-satis::token.copy_message.composer_command'))
+                            ->copyMessageDuration(1500)
+                            ->columnSpanFull(),
+
+                        TextEntry::make('composer_repository')
+                            ->label(__('filament-satis::token.infolist.composer_repository'))
+                            ->html()
+                            ->copyable()
+                            ->copyMessage(__('filament-satis::token.copy_message.composer_repository'))
+                            ->copyMessageDuration(1500)
                             ->columnSpanFull(),
                     ])->columns(2),
 
