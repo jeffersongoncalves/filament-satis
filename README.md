@@ -36,18 +36,6 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 - Filament `^5.0`
 - [jeffersongoncalves/laravel-satis](https://github.com/jeffersongoncalves/laravel-satis) `^1.0`
 
-## Upgrading from 2.x
-
-If you are upgrading from `2.x` (Filament v4), the main change is Livewire v4 support. No breaking changes in the Filament API. See the [CHANGELOG](CHANGELOG.md) for details.
-
-> **Note:** If you need Filament v4 support, use the [`2.x` branch](https://github.com/jeffersongoncalves/filament-satis/tree/2.x).
-
-## Upgrading from 1.x
-
-If you are upgrading from `1.x` (Filament v3), see the [CHANGELOG](CHANGELOG.md) for a full list of breaking changes and the namespace migration guide.
-
-> **Note:** If you need Filament v3 support, use the [`1.x` branch](https://github.com/jeffersongoncalves/filament-satis/tree/1.x).
-
 ## Installation
 
 ### 1. Require the packages
