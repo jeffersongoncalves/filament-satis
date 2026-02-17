@@ -47,7 +47,7 @@ class PackageInfolist
                             ->columnSpanFull(),
                         TextEntry::make('credentials_validated_at')
                             ->label(__('filament-satis::package.fields.credentials_validated_at'))
-                            ->dateTime()
+                            ->since()
                             ->columnSpanFull(),
                     ]),
                 Section::make(__('filament-satis::package.sections.webhook'))
