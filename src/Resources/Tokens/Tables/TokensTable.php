@@ -21,11 +21,6 @@ class TokensTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('email')
-                    ->label(__('filament-satis::token.fields.email'))
-                    ->searchable()
-                    ->sortable(),
-
                 TextColumn::make('packages_count')
                     ->label(__('filament-satis::token.fields.packages_count'))
                     ->counts('packages')
