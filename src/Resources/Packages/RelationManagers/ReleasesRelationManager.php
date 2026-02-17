@@ -31,7 +31,8 @@ class ReleasesRelationManager extends RelationManager
                     ->label(__('filament-satis::package-release.fields.type')),
 
                 TextEntry::make('time')
-                    ->label(__('filament-satis::package-release.fields.time')),
+                    ->label(__('filament-satis::package-release.fields.time'))
+                    ->since(),
 
                 TextEntry::make('dependencies_count')
                     ->label(__('filament-satis::dependency.plural_model_label'))
@@ -72,6 +73,7 @@ class ReleasesRelationManager extends RelationManager
 
                 TextColumn::make('time')
                     ->label(__('filament-satis::package-release.fields.time'))
+                    ->since()
                     ->sortable(),
 
                 TextColumn::make('created_at')
