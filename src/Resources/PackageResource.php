@@ -81,8 +81,8 @@ class PackageResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label(
-                        fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
-                            PackageType::Github => 'user/repo',
+                        fn (Forms\Get $get) => match (true) {
+                            enum_equals($get('type'), PackageType::Github) => 'user/repo',
                             default => 'vendor/package',
                         }
                     )
@@ -138,8 +138,8 @@ class PackageResource extends Resource
 
                         Forms\Components\TextInput::make('url')
                             ->label(
-                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.url.github'),
+                                fn (Forms\Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.url.github'),
                                     default => __('filament-satis::package.form.url.composer'),
                                 }
                             )
@@ -161,8 +161,8 @@ class PackageResource extends Resource
 
                         Forms\Components\TextInput::make('username')
                             ->label(
-                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.username.github'),
+                                fn (Forms\Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.username.github'),
                                     default => __('filament-satis::package.form.username.composer'),
                                 }
                             )
@@ -170,8 +170,8 @@ class PackageResource extends Resource
 
                         Forms\Components\TextInput::make('password')
                             ->label(
-                                fn (Forms\Get $get) => match (PackageType::tryFrom($get('type'))) {
-                                    PackageType::Github => __('filament-satis::package.form.password.github'),
+                                fn (Forms\Get $get) => match (true) {
+                                    enum_equals($get('type'), PackageType::Github) => __('filament-satis::package.form.password.github'),
                                     default => __('filament-satis::package.form.password.composer'),
                                 }
                             )
