@@ -6,21 +6,35 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 
 - **Package Management** — Add and manage Composer & GitHub package sources with CRUD operations
 - **Token-Based Auth** — Secure access with per-token package scoping
+- **Dev Packages** — Mark packages as development-only with `is_dev` flag
 - **Version Tracking** — Automatic tracking of package releases synced from Satis builds
 - **Download Statistics** — Per-version download tracking and analytics
 - **Dependency Mapping** — Public/private dependency classification from package releases
 - **Multi-Tenancy** — Tenant-isolated data with configurable foreign keys
 - **Credential Validation** — Verify package accessibility with tracked validation timestamps
-- **GitHub Webhooks** — Auto-rebuild on push events with HMAC-SHA256 signature validation
+- **Intelligent Validation** — Timestamp-based comparison to skip unnecessary rebuilds
+- **Auth.json Support** — Automatic auth.json generation for authenticated Composer builds
+- **Credential Sanitization** — Remove transport-options from Satis JSON files to prevent credential leaks
+- **GitHub Webhooks** — Auto-rebuild on push, release and create events with HMAC-SHA256 signature validation
 - **Per-Resource Config** — Customize navigation, icons, slugs, clusters, and visibility per resource
+- **Global Search** — Search packages, tokens, releases, and dependencies from the global search bar
 - **Bilingual** — English and Brazilian Portuguese translations included
 - **Laravel Boost** — AI guidelines and skills for assisted development
 
+## Version Compatibility
+
+| Plugin Version | Filament | Laravel | PHP |
+|---------------|----------|---------|-----|
+| 1.x | ^3.0 | ^10 \| ^11 \| ^12 | ^8.1 |
+| 2.x | ^4.0 | ^11.0 | ^8.2 |
+| 3.x | ^5.0 | ^11.28 | ^8.3 |
+
 ## Requirements
 
-- PHP 8.2+
-- Laravel 10+
-- Filament 3.0+
+- PHP `^8.1`
+- Laravel `^10.0 | ^11.0 | ^12.0`
+- Filament `^3.0`
+- [jeffersongoncalves/laravel-satis](https://github.com/jeffersongoncalves/laravel-satis) `^1.0`
 
 ## Installation
 
@@ -120,7 +134,7 @@ public function panel(Panel $panel): Panel
 ```
 
 The plugin automatically:
-- Sets the `laravel-satis` tenancy configuration during `register()`
+- Sets the `satis` tenancy configuration during `register()`
 - Configures the tenant resolver using `filament()->getTenant()` during `boot()`
 - Scopes all queries and auto-sets the foreign key on creation
 
@@ -189,10 +203,11 @@ return [
         'enabled' => false,
         'model' => null,
         'foreign_key' => null,
+        'ownership_relationship' => null,
         'resolver' => null,
     ],
 
-    // Database table prefix
+    // Database table prefix (set to null for unprefixed tables)
     'table_prefix' => 'satis_',
 
     // Override default model classes
@@ -212,22 +227,29 @@ return [
         'output_html' => false,
         'archive' => ['directory' => 'archives', 'skip_dev' => true],
         'minimum_stability' => 'stable',
+        'secure_http' => false,
     ],
 
     // Queue settings
-    'queue' => ['connection' => null, 'queue_name' => null],
+    'queue' => [
+        'connection' => null,
+        'queue_name' => null,
+        'timeout' => 86400, // 24 hours
+    ],
 
     // Scheduled command frequencies
     'schedule' => [
         'build' => 'weekly',
+        'token_build' => 'weekly',
         'validate' => 'hourly',
+        'sanitize' => 'daily',
         'dependencies' => 'weekly',
     ],
 
     // Auth guard and provider
     'auth' => ['guard' => 'satis-token', 'provider' => 'satis-tokens'],
 
-    // Route prefixes and middleware
+    // Route prefixes and middleware (set composer_prefix to null for no prefix)
     'routes' => [
         'api_prefix' => 'api/satis',
         'composer_prefix' => 'satis',
@@ -326,9 +348,14 @@ __('filament-satis::general.created_at')
 
 | Command | Description |
 |---------|-------------|
-| `php artisan satis:build` | Build Satis repository from registered packages |
+| `php artisan satis:build` | Build Satis repository (tenant-based) |
 | `php artisan satis:build --tenant=1` | Build for a specific tenant |
-| `php artisan satis:validate` | Validate builds and package credentials |
+| `php artisan satis:token-build` | Build Satis repository (token-based) |
+| `php artisan satis:token-build --token=5` | Build for a specific token |
+| `php artisan satis:validate` | Validate builds and trigger rebuilds if needed |
+| `php artisan satis:clean` | Clean all Satis builds from storage |
+| `php artisan satis:clean --force` | Force clean without confirmation |
+| `php artisan satis:sanitize` | Remove credentials from Satis JSON files |
 | `php artisan dependency:packages` | Process and sync package dependencies |
 
 ## GitHub Webhooks
@@ -337,8 +364,14 @@ Each package auto-generates a `webhook_secret` and `reference`. Configure your G
 
 - **URL:** `https://your-app.com/api/satis/webhooks/github/{reference}`
 - **Secret:** The `webhook_secret` from the package edit form
-- **Events:** Push
+- **Events:** Push, Release, Create
 - **Content Type:** `application/json`
+
+The webhook handler:
+1. Validates the package is a GitHub type
+2. Filters supported events (`push`, `release`, `create`)
+3. Verifies HMAC-SHA256 signature when a secret is configured
+4. Dispatches tenant and token rebuilds
 
 ## Laravel Boost Integration
 

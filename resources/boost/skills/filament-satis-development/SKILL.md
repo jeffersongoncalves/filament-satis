@@ -69,19 +69,27 @@ $plugin->getTenantForeignKey()        // Get tenant foreign key
 **Pages:** ListPackages, CreatePackage, ViewPackage, EditPackage
 
 **Form Schema:**
-- Section "General": `name` (text, required), `type` (select, PackageType enum), `url` (text, required, URL)
-- Section "Credentials": `username` (text), `password` (password)
+- Section "General": `name` (text, required, regex validation per type), `is_dev` (toggle), `type` (toggleButtons, PackageType enum, live), `url` (text, required, URL)
+- Section "Credentials": `username` (text), `password` (password, revealable, dehydratedWhenFilled)
 - Section "Integration" (edit only): `webhook_secret` (disabled), `reference` (disabled)
 
-**Table Columns:** name (searchable, sortable), type (badge, sortable), url (limit 50, searchable), is_credentials_validated (icon/boolean), credentials_validated_at (datetime, toggleable), created_at (datetime, toggleable)
+**Infolist Schema:**
+- Section: name, type, url, is_dev
+- Section "Credentials": is_credentials_validated (icon), credentials_validated_at
+- Section "Webhook" (GitHub only): webhook_url (copyable), webhook_secret (copyable)
+- Latest release: version (badge), time, type, description, homepage, dependencies repeatable
+
+**Table Columns:** name (searchable, sortable), is_dev (icon), is_credentials_validated (icon), package_releases_count (counts), type (toggleable), url (toggleable), created_at (toggleable), updated_at (toggleable)
 
 **Table Filters:** SelectFilter on `type` (PackageType enum)
 
-**Actions:** View, Edit, Delete, BulkDelete
+**Actions:** View, Edit, Delete, BulkDelete, ValidateCredentials (on Edit/View)
+
+**Global Search:** Searchable by `name`
 
 **RelationManagers:**
-- `ReleasesRelationManager` — Shows package releases (version, type, time, created_at)
-- `DownloadsRelationManager` — Shows download stats (version, downloads, created_at)
+- `ReleasesRelationManager` — Shows releases with infolist slideOver (version, dependencies_count, time, type)
+- `DownloadsRelationManager` — Shows download stats with infolist slideOver (version, downloads)
 
 ### TokenResource (Full CRUD)
 
@@ -89,28 +97,40 @@ $plugin->getTenantForeignKey()        // Get tenant foreign key
 
 **Form Schema:**
 - Section "General": `name` (text, required), `email` (text, required, email)
-- Section "Authentication" (edit only): `token` (text, disabled, copyable)
-- Section "Packages": `packages` relation (CheckboxList, all packages)
+- Section "Authentication" (edit only): `token` (text, disabled)
+- Section "Packages": `packages` relation (Select multiple, filtered to credentials-validated packages)
+
+**Infolist Schema:**
+- Section: name, token (copyable)
+- Section "Packages": packages.name (listWithLineBreaks, bulleted)
 
 **Table Columns:** name (searchable), email (searchable), packages_count, created_at (toggleable)
 
+**Global Search:** Searchable by `name`
+
 **Actions:** View, Edit, Delete, BulkDelete
+
+**Job Dispatching:** Creates dispatch `SyncTokenPackages`, edits dispatch `SyncTokenPackages`
 
 ### PackageReleaseResource (Read-only)
 
 **Pages:** ListPackageReleases, ViewPackageRelease
 
-**Table Columns:** package.name (searchable), version (searchable, sortable), type (sortable), time (sortable), created_at (sortable)
+**Table Columns:** package.name, version (badge, searchable, sortable), dependencies_count, time, type, description, homepage, created_at (toggleable)
 
 **Default Sort:** created_at DESC
 
-**Infolist:** package, version, type, time, description, homepage (URL)
+**Infolist:** package, version (badge), type, time, description, homepage, dependencies (repeatable with name + pivot.version badge)
+
+**Global Search:** Searchable by `version`
 
 ### PackageDownloadResource (Read-only)
 
-**Pages:** ListPackageDownloads
+**Pages:** ListPackageDownloads, ViewPackageDownload
 
-**Table Columns:** package.name (searchable, sortable), version (searchable, sortable), downloads (numeric, sortable), updated_at (sortable)
+**Table Columns:** package.name (sortable), version (badge, searchable, sortable), downloads (badge, sortable), created_at (toggleable)
+
+**Infolist:** package.name, version (badge), downloads (badge)
 
 **Default Sort:** downloads DESC
 
@@ -118,16 +138,18 @@ $plugin->getTenantForeignKey()        // Get tenant foreign key
 
 **Pages:** ListDependencies, ViewDependency
 
-**Table Columns:** name (searchable, sortable), type (badge, sortable), package_releases_count (sortable), created_at (toggleable)
+**Table Columns:** name (searchable, sortable), type (badge, sortable), versions (badge), package_releases_count (sortable), created_at (toggleable)
 
 **Table Filters:** SelectFilter on `type` (DependencyType enum)
 
 **Default Sort:** name ASC
 
-**Infolist:** name, type (badge), versions (array with line breaks)
+**Infolist:** name, type (badge), versions (badge)
+
+**Global Search:** Searchable by `name`
 
 **RelationManagers:**
-- `PackageReleasesRelationManager` — Shows which package releases depend on this (package.name, version, pivot.version as constraint, created_at)
+- `PackageReleasesRelationManager` — Shows package releases with infolist slideOver (package.name, version, pivot.version as constraint)
 
 ## Configuration
 
@@ -150,38 +172,6 @@ Each resource has its own section with identical keys:
     'navigation_icon' => 'heroicon-o-cube',   // Heroicon name
     'navigation_sort' => 1,                   // Sort order
     'slug' => 'satis/packages',               // URL slug
-],
-
-'token_resource' => [
-    'cluster' => null,
-    'should_register_navigation' => true,
-    'navigation_icon' => 'heroicon-o-key',
-    'navigation_sort' => 2,
-    'slug' => 'satis/tokens',
-],
-
-'package_release_resource' => [
-    'cluster' => null,
-    'should_register_navigation' => true,
-    'navigation_icon' => 'heroicon-o-tag',
-    'navigation_sort' => 3,
-    'slug' => 'satis/package-releases',
-],
-
-'package_download_resource' => [
-    'cluster' => null,
-    'should_register_navigation' => true,
-    'navigation_icon' => 'heroicon-o-arrow-down-tray',
-    'navigation_sort' => 4,
-    'slug' => 'satis/package-downloads',
-],
-
-'dependency_resource' => [
-    'cluster' => null,
-    'should_register_navigation' => true,
-    'navigation_icon' => 'heroicon-o-link',
-    'navigation_sort' => 5,
-    'slug' => 'satis/dependencies',
 ],
 ```
 
@@ -251,6 +241,17 @@ __('filament-satis::package.sections.general')
 __('filament-satis::package.fields.name')
 __('filament-satis::general.created_at')
 ```
+
+## Artisan Commands (from laravel-satis)
+
+| Command | Description |
+|---------|-------------|
+| `satis:build` | Build Satis repository (tenant-based) |
+| `satis:token-build` | Build Satis repository (token-based) |
+| `satis:validate` | Validate builds, trigger rebuilds if needed |
+| `satis:clean` | Clean all Satis builds from storage |
+| `satis:sanitize` | Remove credentials from Satis JSON files |
+| `dependency:packages` | Process and sync package dependencies |
 
 ## Common Patterns
 
