@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.3.2 - 2026-02-17
+
+### Changed
+
+- Use `PackageType::of()` in match expressions for cleaner label resolution per package type
+
 ## 2.3.1 - 2026-02-17
 
 ### Fixed
