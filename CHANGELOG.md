@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.3.0 - 2026-02-17
+
+### Added
+
+- `enum_equals()` namespaced helper function for clean BackedEnum comparisons
+
+### Changed
+
+- Restructured Package form: flat layout with dynamic labels per type (Composer/GitHub), instruction placeholders, fieldset for credentials, and specific validations for GitHub URL and PAT token
+
 ## 1.2.1 - 2026-02-17
 
 ### Fixed
