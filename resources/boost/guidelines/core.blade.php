@@ -68,4 +68,4 @@ php artisan vendor:publish --tag=filament-satis-translations
 
 - All models are resolved via `ModelResolver` from `laravel-satis` — never hardcode model classes.
 - Resources read all navigation/UI properties from config — override via `config/filament-satis.php`.
-- The plugin passes tenancy config to `laravel-satis` during `register()` and sets the resolver during `boot()`.
+- The plugin passes tenancy config to `satis` during `register()` and sets the resolver during `boot()`.
