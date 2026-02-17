@@ -12,7 +12,6 @@ return [
 
     'fields' => [
         'name' => 'Nome',
-        'email' => 'E-mail',
         'token' => 'Token',
         'packages' => 'Pacotes',
         'packages_count' => 'Pacotes',

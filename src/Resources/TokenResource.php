@@ -81,19 +81,13 @@ class TokenResource extends Resource
                             ->required()
                             ->maxLength(255),
 
-                        Forms\Components\TextInput::make('email')
-                            ->label(__('filament-satis::token.fields.email'))
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-
                         Forms\Components\TextInput::make('token')
                             ->label(__('filament-satis::token.fields.token'))
                             ->disabled()
                             ->dehydrated(false)
                             ->visibleOn('edit')
                             ->columnSpanFull(),
-                    ])->columns(2),
+                    ]),
 
                 Forms\Components\Section::make(__('filament-satis::token.sections.packages'))
                     ->schema([
@@ -113,11 +107,6 @@ class TokenResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('filament-satis::token.fields.name'))
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('email')
-                    ->label(__('filament-satis::token.fields.email'))
                     ->searchable()
                     ->sortable(),
 
@@ -153,8 +142,6 @@ class TokenResource extends Resource
                     ->schema([
                         Infolists\Components\TextEntry::make('name')
                             ->label(__('filament-satis::token.fields.name')),
-                        Infolists\Components\TextEntry::make('email')
-                            ->label(__('filament-satis::token.fields.email')),
                         Infolists\Components\TextEntry::make('token')
                             ->label(__('filament-satis::token.fields.token'))
                             ->copyable()
