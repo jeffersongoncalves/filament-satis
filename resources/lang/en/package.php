@@ -10,6 +10,8 @@ return [
         'credentials' => 'Credentials',
         'integration' => 'Integration',
         'webhook' => 'Webhook',
+        'package_release' => 'Latest Release',
+        'dependencies' => 'Dependencies',
     ],
 
     'fields' => [
@@ -24,6 +26,17 @@ return [
         'credentials_validated_at' => 'Validated At',
         'is_dev' => 'Development',
         'releases_count' => 'Releases',
+    ],
+
+    'infolist' => [
+        'composer_command' => 'Composer Command',
+        'webhook_url' => 'Webhook URL',
+    ],
+
+    'copy_message' => [
+        'composer_command' => 'Composer command copied successfully!',
+        'webhook_url' => 'Webhook URL copied successfully!',
+        'webhook_secret' => 'Webhook secret copied successfully!',
     ],
 
     'validation' => [

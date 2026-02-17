@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\Pages;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageResource\RelationManagers;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
+use JeffersonGoncalves\LaravelSatis\Models\Package;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageResource extends Resource
@@ -222,46 +223,102 @@ class PackageResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
+            ->columns(null)
             ->schema([
-                Infolists\Components\Section::make(__('filament-satis::package.sections.general'))
+                Infolists\Components\Section::make()
                     ->schema([
                         Infolists\Components\TextEntry::make('name')
-                            ->label(__('filament-satis::package.fields.name')),
+                            ->label(__('filament-satis::package.fields.name'))
+                            ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('type')
                             ->label(__('filament-satis::package.fields.type'))
-                            ->badge(),
+                            ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('url')
                             ->label(__('filament-satis::package.fields.url'))
-                            ->url(fn ($state) => $state)
-                            ->openUrlInNewTab(),
+                            ->columnSpanFull(),
                         Infolists\Components\IconEntry::make('is_dev')
                             ->label(__('filament-satis::package.fields.is_dev'))
-                            ->boolean(),
-                    ])->columns(2),
-
+                            ->boolean()
+                            ->columnSpanFull(),
+                        Infolists\Components\TextEntry::make('composer_command')
+                            ->label(__('filament-satis::package.infolist.composer_command'))
+                            ->copyable()
+                            ->copyMessage(__('filament-satis::package.copy_message.composer_command'))
+                            ->copyMessageDuration(1500)
+                            ->columnSpanFull(),
+                    ]),
                 Infolists\Components\Section::make(__('filament-satis::package.sections.credentials'))
                     ->schema([
                         Infolists\Components\IconEntry::make('is_credentials_validated')
                             ->label(__('filament-satis::package.fields.is_credentials_validated'))
-                            ->boolean(),
+                            ->boolean()
+                            ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('credentials_validated_at')
                             ->label(__('filament-satis::package.fields.credentials_validated_at'))
                             ->dateTime()
-                            ->placeholder('—'),
-                    ])->columns(2),
-
+                            ->columnSpanFull(),
+                    ]),
                 Infolists\Components\Section::make(__('filament-satis::package.sections.webhook'))
+                    ->visible(fn (Package $record): bool => $record->type === PackageType::Github)
                     ->schema([
+                        Infolists\Components\TextEntry::make('webhook_url')
+                            ->label(__('filament-satis::package.infolist.webhook_url'))
+                            ->copyable()
+                            ->copyMessage(__('filament-satis::package.copy_message.webhook_url'))
+                            ->copyMessageDuration(1500)
+                            ->columnSpanFull(),
                         Infolists\Components\TextEntry::make('webhook_secret')
                             ->label(__('filament-satis::package.fields.webhook_secret'))
                             ->copyable()
-                            ->placeholder('—'),
-                        Infolists\Components\TextEntry::make('reference')
-                            ->label(__('filament-satis::package.fields.reference'))
-                            ->copyable()
-                            ->placeholder('—'),
-                    ])->columns(2)
-                    ->visible(fn ($record) => $record?->type === PackageType::Github),
+                            ->copyMessage(__('filament-satis::package.copy_message.webhook_secret'))
+                            ->copyMessageDuration(1500)
+                            ->columnSpanFull(),
+                    ]),
+                Infolists\Components\Grid::make()
+                    ->relationship('packageRelease')
+                    ->schema([
+                        Infolists\Components\Section::make()
+                            ->heading(__('filament-satis::package.sections.package_release'))
+                            ->columnSpan(1)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('version')
+                                    ->label(__('filament-satis::package-release.fields.version'))
+                                    ->badge()
+                                    ->columnSpanFull(),
+                                Infolists\Components\TextEntry::make('time')
+                                    ->label(__('filament-satis::package-release.fields.time'))
+                                    ->columnSpanFull()
+                                    ->hidden(fn ($state) => blank($state)),
+                                Infolists\Components\TextEntry::make('type')
+                                    ->label(__('filament-satis::package-release.fields.type'))
+                                    ->columnSpanFull(),
+                                Infolists\Components\TextEntry::make('description')
+                                    ->label(__('filament-satis::package-release.fields.description'))
+                                    ->columnSpanFull()
+                                    ->hidden(fn ($state) => blank($state)),
+                                Infolists\Components\TextEntry::make('homepage')
+                                    ->label(__('filament-satis::package-release.fields.homepage'))
+                                    ->columnSpanFull()
+                                    ->hidden(fn ($state) => blank($state)),
+                            ]),
+                        Infolists\Components\Section::make()
+                            ->heading(__('filament-satis::package.sections.dependencies'))
+                            ->columnSpan(1)
+                            ->schema([
+                                Infolists\Components\RepeatableEntry::make('dependencies')
+                                    ->translateLabel(false)
+                                    ->hiddenLabel()
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('name')
+                                            ->hiddenLabel(),
+                                        Infolists\Components\TextEntry::make('pivot.version')
+                                            ->hiddenLabel()
+                                            ->badge(),
+                                    ])
+                                    ->columns()
+                                    ->contained(false),
+                            ]),
+                    ]),
             ]);
     }
 

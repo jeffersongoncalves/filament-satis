@@ -10,6 +10,8 @@ return [
         'credentials' => 'Credenciais',
         'integration' => 'Integração',
         'webhook' => 'Webhook',
+        'package_release' => 'Última Release',
+        'dependencies' => 'Dependências',
     ],
 
     'fields' => [
@@ -24,6 +26,17 @@ return [
         'credentials_validated_at' => 'Validado em',
         'is_dev' => 'Desenvolvimento',
         'releases_count' => 'Releases',
+    ],
+
+    'infolist' => [
+        'composer_command' => 'Comando Composer',
+        'webhook_url' => 'URL do Webhook',
+    ],
+
+    'copy_message' => [
+        'composer_command' => 'Comando Composer copiado com sucesso!',
+        'webhook_url' => 'URL do Webhook copiada com sucesso!',
+        'webhook_secret' => 'Webhook secret copiado com sucesso!',
     ],
 
     'validation' => [
