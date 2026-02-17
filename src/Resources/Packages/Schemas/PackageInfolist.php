@@ -9,7 +9,6 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use JeffersonGoncalves\LaravelSatis\Enums\PackageType;
-use JeffersonGoncalves\LaravelSatis\Models\Package;
 
 class PackageInfolist
 {
@@ -52,7 +51,7 @@ class PackageInfolist
                             ->columnSpanFull(),
                     ]),
                 Section::make(__('filament-satis::package.sections.webhook'))
-                    ->visible(fn (Package $record): bool => $record->type === PackageType::Github)
+                    ->visible(fn ($record): bool => $record?->type === PackageType::Github)
                     ->schema([
                         TextEntry::make('webhook_url')
                             ->label(__('filament-satis::package.infolist.webhook_url'))
