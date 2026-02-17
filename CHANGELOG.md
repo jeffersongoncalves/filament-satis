@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.2.1 - 2026-02-17
+
+### Fixed
+
+- Remove email field from token UI — the email is a fixed internal value used only for Laravel authentication and does not need to be displayed
+
 ## 1.2.0 - 2026-02-17
 
 ### What's Changed
@@ -9,6 +15,7 @@ All notable changes to this project will be documented in this file.
 #### Enhancements
 
 - Enhanced **PackageInfolist** with new fields and sections:
+  
   - `composer_command` field with copyable support
   - `webhook_url` field with copyable support
   - Package release section via Grid relationship (version, time, type, description, homepage)
@@ -16,6 +23,7 @@ All notable changes to this project will be documented in this file.
   - All entries set to `columnSpanFull` layout
   
 - Added new translation keys for `infolist` and `copy_message` in **en** and **pt_BR**
+  
 
 **Full Changelog**: https://github.com/jeffersongoncalves/filament-satis/compare/1.1.0...1.2.0
 
