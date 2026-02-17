@@ -28,9 +28,7 @@ class PackageForm
                     )
                     ->rule(
                         fn (Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
-                            $type = PackageType::tryFrom($get('type'));
-
-                            if ($type === PackageType::Composer) {
+                            if (enum_equals($get('type'), PackageType::Composer)) {
                                 if (preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*\/[a-z0-9]([_.-]?[a-z0-9]+)*$/', $value)) {
                                     return;
                                 }
@@ -38,7 +36,7 @@ class PackageForm
                                 $fail(__('filament-satis::package.validation.composer_name'));
                             }
 
-                            if ($type === PackageType::Github) {
+                            if (enum_equals($get('type'), PackageType::Github)) {
                                 if (preg_match('/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/', $value)) {
                                     return;
                                 }
@@ -68,12 +66,12 @@ class PackageForm
                     ->schema([
                         TextEntry::make(__('filament-satis::package.instructions.composer.label'))
                             ->state(fn () => __('filament-satis::package.instructions.composer.content'))
-                            ->visible(fn (Get $get): bool => PackageType::tryFrom($get('type')) === PackageType::Composer)
+                            ->visible(fn (Get $get): bool => enum_equals($get('type'), PackageType::Composer))
                             ->columnSpanFull(),
 
                         TextEntry::make(__('filament-satis::package.instructions.github.label'))
                             ->state(fn () => __('filament-satis::package.instructions.github.content'))
-                            ->visible(fn (Get $get): bool => PackageType::tryFrom($get('type')) === PackageType::Github)
+                            ->visible(fn (Get $get): bool => enum_equals($get('type'), PackageType::Github))
                             ->columnSpanFull(),
 
                         TextInput::make('url')
@@ -85,7 +83,7 @@ class PackageForm
                             )
                             ->rule(
                                 fn (Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
-                                    if (PackageType::tryFrom($get('type')) !== PackageType::Github) {
+                                    if (! enum_equals($get('type'), PackageType::Github)) {
                                         return filter_var($value, FILTER_VALIDATE_URL);
                                     }
 
@@ -119,7 +117,7 @@ class PackageForm
                             ->revealable()
                             ->rule(
                                 fn (Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
-                                    if (PackageType::tryFrom($get('type')) !== PackageType::Github) {
+                                    if (! enum_equals($get('type'), PackageType::Github)) {
                                         return;
                                     }
 
