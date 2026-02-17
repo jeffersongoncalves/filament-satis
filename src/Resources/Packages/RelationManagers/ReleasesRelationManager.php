@@ -11,7 +11,7 @@ use Filament\Tables\Table;
 
 class ReleasesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'releases';
+    protected static string $relationship = 'packageReleases';
 
     public static function getTitle($ownerRecord, string $pageClass): string
     {

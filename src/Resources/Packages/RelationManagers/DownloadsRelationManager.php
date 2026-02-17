@@ -11,7 +11,7 @@ use Filament\Tables\Table;
 
 class DownloadsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'downloads';
+    protected static string $relationship = 'packageDownloads';
 
     public static function getTitle($ownerRecord, string $pageClass): string
     {
