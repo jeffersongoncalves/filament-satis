@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.2.0 - 2026-02-17
+
+### What's Changed
+
+#### Enhancements
+
+- Enhanced **PackageInfolist** with new fields and sections:
+  - `composer_command` field with copyable support
+  - `webhook_url` field with copyable support
+  - Package release section via Grid relationship (version, time, type, description, homepage)
+  - Dependencies section with RepeatableEntry
+  - All entries set to `columnSpanFull` layout
+  
+- Enhanced **TokenInfolist** with copyable token, composer command, and composer repository fields
+- Added new translation keys for `infolist` and `copy_message` in **en** and **pt_BR**
+
+**Full Changelog**: https://github.com/jeffersongoncalves/filament-satis/compare/3.1.0...3.2.0
+
 ## 3.1.0 - 2026-02-17
 
 ### What's Changed
