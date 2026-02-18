@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.11.0 - 2026-02-18
+
+### Fixed
+
+- Correct pt_BR translations (missing accents: Dependências, Versões, Restrição, Versão, Descrição, Informações)
+- Limit versions badges to 3 in dependencies table with expandable list
+
 ## 2.10.1 - 2026-02-18
 
 **Full Changelog**: https://github.com/jeffersongoncalves/filament-satis/compare/2.10.0...2.10.1
