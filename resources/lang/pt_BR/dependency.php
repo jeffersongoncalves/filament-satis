@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'navigation_label' => 'Dependencias',
-    'model_label' => 'Dependencia',
-    'plural_model_label' => 'Dependencias',
+    'navigation_label' => 'Dependências',
+    'model_label' => 'Dependência',
+    'plural_model_label' => 'Dependências',
 
     'fields' => [
         'name' => 'Nome',
         'type' => 'Tipo',
-        'versions' => 'Versoes',
+        'versions' => 'Versões',
         'releases_count' => 'Releases',
-        'constraint' => 'Restricao',
+        'constraint' => 'Restrição',
     ],
 ];

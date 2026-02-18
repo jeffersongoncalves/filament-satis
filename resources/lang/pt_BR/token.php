@@ -6,7 +6,7 @@ return [
     'plural_model_label' => 'Tokens',
 
     'sections' => [
-        'general' => 'Informacoes Gerais',
+        'general' => 'Informações Gerais',
         'packages' => 'Pacotes',
     ],
 

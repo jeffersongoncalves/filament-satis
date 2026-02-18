@@ -7,10 +7,10 @@ return [
 
     'fields' => [
         'package' => 'Pacote',
-        'version' => 'Versao',
+        'version' => 'Versão',
         'type' => 'Tipo',
         'time' => 'Data',
-        'description' => 'Descricao',
+        'description' => 'Descrição',
         'homepage' => 'Homepage',
     ],
 ];

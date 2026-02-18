@@ -31,7 +31,9 @@ class DependenciesTable
                 TextColumn::make('versions')
                     ->label(__('filament-satis::dependency.fields.versions'))
                     ->badge()
-                    ->separator(','),
+                    ->separator(',')
+                    ->limitList(3)
+                    ->expandableLimitedList(),
 
                 TextColumn::make('package_releases_count')
                     ->label(__('filament-satis::dependency.fields.releases_count'))
