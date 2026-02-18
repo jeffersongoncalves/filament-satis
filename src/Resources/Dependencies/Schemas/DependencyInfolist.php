@@ -5,6 +5,7 @@ namespace JeffersonGoncalves\FilamentSatis\Resources\Dependencies\Schemas;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use JeffersonGoncalves\LaravelSatis\Enums\DependencyType;
 
 class DependencyInfolist
 {
@@ -20,7 +21,11 @@ class DependencyInfolist
 
                         TextEntry::make('type')
                             ->label(__('filament-satis::dependency.fields.type'))
-                            ->badge(),
+                            ->badge()
+                            ->color(fn (DependencyType $state): string => match ($state) {
+                                DependencyType::Private => 'danger',
+                                default => 'success',
+                            }),
 
                         TextEntry::make('versions')
                             ->label(__('filament-satis::dependency.fields.versions'))

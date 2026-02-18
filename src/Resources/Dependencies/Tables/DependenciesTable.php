@@ -22,6 +22,10 @@ class DependenciesTable
                 TextColumn::make('type')
                     ->label(__('filament-satis::dependency.fields.type'))
                     ->badge()
+                    ->color(fn (DependencyType $state): string => match ($state) {
+                        DependencyType::Private => 'danger',
+                        default => 'success',
+                    })
                     ->sortable(),
 
                 TextColumn::make('versions')
