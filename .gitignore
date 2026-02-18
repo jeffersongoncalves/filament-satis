@@ -10,3 +10,4 @@ composer.lock
 coverage
 .php-cs-fixer.cache
 .claude/settings.local.json
+/build
