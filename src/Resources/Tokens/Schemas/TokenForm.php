@@ -4,8 +4,8 @@ namespace JeffersonGoncalves\FilamentSatis\Resources\Tokens\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 
 class TokenForm
 {
@@ -14,34 +14,20 @@ class TokenForm
         return $schema
             ->columns(null)
             ->components([
-                Section::make(__('filament-satis::token.sections.general'))
-                    ->schema([
-                        TextInput::make('name')
-                            ->label(__('filament-satis::token.fields.name'))
-                            ->required()
-                            ->maxLength(255),
-
-                        TextInput::make('token')
-                            ->label(__('filament-satis::token.fields.token'))
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->visibleOn('edit')
-                            ->columnSpanFull(),
-                    ]),
-
-                Section::make(__('filament-satis::token.sections.packages'))
-                    ->schema([
-                        Select::make('packages')
-                            ->label(__('filament-satis::token.fields.packages'))
-                            ->relationship(
-                                'packages',
-                                'name',
-                                fn ($query) => $query->where('is_credentials_validated', true)->orderBy('name')
-                            )
-                            ->multiple()
-                            ->preload()
-                            ->searchable(),
-                    ]),
+                TextInput::make('name')
+                    ->label(__('filament-satis::token.fields.name'))
+                    ->required()
+                    ->maxLength(255),
+                Select::make('packages')
+                    ->label(__('filament-satis::token.fields.packages'))
+                    ->relationship(
+                        'packages',
+                        'name',
+                        fn (Builder $query) => $query->where('is_credentials_validated', true)->orderBy('name')
+                    )
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 }
