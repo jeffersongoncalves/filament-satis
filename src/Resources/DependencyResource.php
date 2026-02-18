@@ -90,7 +90,7 @@ class DependencyResource extends Resource
                 Tables\Columns\TextColumn::make('versions')
                     ->label(__('filament-satis::dependency.fields.versions'))
                     ->badge()
-                    ->separator(',')
+                    ->listWithLineBreaks()
                     ->limitList(3)
                     ->expandableLimitedList(),
 
