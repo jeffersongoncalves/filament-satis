@@ -59,6 +59,10 @@ class PackageForm
                     ->hiddenLabel()
                     ->live()
                     ->options(PackageType::class)
+                    ->colors([
+                        PackageType::Composer->value => 'info',
+                        PackageType::Github->value => 'warning',
+                    ])
                     ->default(PackageType::Composer)
                     ->required()
                     ->disabled(fn ($context) => $context === 'edit'),
