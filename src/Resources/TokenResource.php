@@ -74,30 +74,20 @@ class TokenResource extends Resource
         return $form
             ->columns(null)
             ->schema([
-                Forms\Components\Section::make(__('filament-satis::token.sections.general'))
-                    ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('filament-satis::token.fields.name'))
-                            ->required()
-                            ->maxLength(255),
-
-                        Forms\Components\TextInput::make('token')
-                            ->label(__('filament-satis::token.fields.token'))
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->visibleOn('edit')
-                            ->columnSpanFull(),
-                    ]),
-
-                Forms\Components\Section::make(__('filament-satis::token.sections.packages'))
-                    ->schema([
-                        Forms\Components\Select::make('packages')
-                            ->label(__('filament-satis::token.fields.packages'))
-                            ->relationship('packages', 'name', fn ($query) => $query->where('is_credentials_validated', true)->orderBy('name'))
-                            ->multiple()
-                            ->preload()
-                            ->searchable(),
-                    ]),
+                Forms\Components\TextInput::make('name')
+                    ->label(__('filament-satis::token.fields.name'))
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Select::make('packages')
+                    ->label(__('filament-satis::token.fields.packages'))
+                    ->relationship(
+                        'packages',
+                        'name',
+                        fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('is_credentials_validated', true)->orderBy('name')
+                    )
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
