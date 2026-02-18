@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.7.0 - 2026-02-18
+
+**Full Changelog**: https://github.com/jeffersongoncalves/filament-satis/compare/3.6.0...3.7.0
+
 ## 2.6.0 - 2026-02-17
 
 ### Feature
