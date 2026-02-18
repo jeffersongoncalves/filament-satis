@@ -7,7 +7,7 @@ return [
 
     'fields' => [
         'package' => 'Pacote',
-        'version' => 'Versao',
+        'version' => 'Versão',
         'downloads' => 'Downloads',
     ],
 ];
