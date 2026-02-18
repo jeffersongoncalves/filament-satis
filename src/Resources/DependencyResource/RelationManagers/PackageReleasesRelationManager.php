@@ -7,6 +7,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageReleasesRelationManager extends RelationManager
 {
@@ -63,6 +64,6 @@ class PackageReleasesRelationManager extends RelationManager
                 Tables\Actions\ViewAction::make()
                     ->slideOver(),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort(app(ModelResolver::packageRelease())->qualifyColumn('created_at'), 'desc');
     }
 }
