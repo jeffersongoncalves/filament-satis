@@ -31,7 +31,7 @@ class DependenciesTable
                 TextColumn::make('versions')
                     ->label(__('filament-satis::dependency.fields.versions'))
                     ->badge()
-                    ->separator(',')
+                    ->listWithLineBreaks()
                     ->limitList(3)
                     ->expandableLimitedList(),
 
