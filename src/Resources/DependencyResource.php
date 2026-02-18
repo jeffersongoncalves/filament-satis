@@ -81,6 +81,10 @@ class DependencyResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('filament-satis::dependency.fields.type'))
                     ->badge()
+                    ->color(fn (DependencyType $state): string => match ($state) {
+                        DependencyType::Private => 'danger',
+                        default => 'success',
+                    })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('versions')
@@ -120,7 +124,11 @@ class DependencyResource extends Resource
                             ->label(__('filament-satis::dependency.fields.name')),
                         Infolists\Components\TextEntry::make('type')
                             ->label(__('filament-satis::dependency.fields.type'))
-                            ->badge(),
+                            ->badge()
+                            ->color(fn (DependencyType $state): string => match ($state) {
+                                DependencyType::Private => 'danger',
+                                default => 'success',
+                            }),
                         Infolists\Components\TextEntry::make('versions')
                             ->label(__('filament-satis::dependency.fields.versions'))
                             ->badge()
