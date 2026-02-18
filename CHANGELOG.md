@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.11.1 - 2026-02-18
+
+### Fixed
+
+- Fix expandable version list not showing items when expanded
+
 ## 1.11.0 - 2026-02-18
 
 ### Fixed
