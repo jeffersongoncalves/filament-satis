@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
 class PackageReleasesRelationManager extends RelationManager
 {
@@ -60,7 +61,7 @@ class PackageReleasesRelationManager extends RelationManager
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort(app(ModelResolver::packageRelease())->qualifyColumn('created_at'), 'desc')
             ->recordActions([
                 ViewAction::make()
                     ->slideOver(),
