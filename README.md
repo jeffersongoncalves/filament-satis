@@ -1,3 +1,9 @@
+<div class="filament-hidden">
+
+![Filament Satis](https://raw.githubusercontent.com/jeffersongoncalves/filament-satis/3.x/art/jeffersongoncalves-filament-satis.png)
+
+</div>
+
 # Filament Satis
 
 A [Filament](https://filamentphp.com) plugin for managing private Composer repositories powered by [Satis](https://github.com/composer/satis).
