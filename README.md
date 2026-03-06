@@ -44,6 +44,8 @@ A [Filament](https://filamentphp.com) plugin for managing private Composer repos
 
 ## Installation
 
+You can install the package via composer:
+
 ### 1. Require the packages
 
 ```bash
