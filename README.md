@@ -6,6 +6,12 @@
 
 # Filament Satis
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/filament-satis.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-satis)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-satis/tests.yml?branch=1.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/filament-satis/actions?query=workflow%3Atests+branch%3A1.x)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-satis/fix-php-code-style-issues.yml?branch=1.x&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/filament-satis/actions?query=workflow%3Afix-php-code-style-issues+branch%3A1.x)
+[![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/filament-satis.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-satis)
+[![License](https://img.shields.io/packagist/l/jeffersongoncalves/filament-satis.svg?style=flat-square)](LICENSE.md)
+
 A [Filament](https://filamentphp.com) plugin for managing private Composer repositories powered by [Satis](https://github.com/composer/satis).
 
 ## Features
