@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.12.0 - 2026-03-13
+
+### What's Changed
+
+#### Breaking Changes
+
+- Updated `jeffersongoncalves/laravel-satis` dependency from `^1.11` to `^2.0`
+- Removed `url`, `username`, `password` fields from PackageForm (replaced by credential relationship)
+- Navigation sort order changed: credential (2), token (3), package-release (4), package-download (5), dependency (6)
+
+#### New Features
+
+- Added `CredentialResource` with full CRUD (form, table, infolist, pages)
+- Added credential validation action with `ValidateCredential`
+- Credential inline creation from PackageForm via `createOptionForm`
+- Added translations (en + pt_BR) for credential resource
+
+#### Migration
+
+See [laravel-satis v2.0 upgrade guide](https://github.com/jeffersongoncalves/laravel-satis) for data migration steps.
+
 ## 2.11.2 - 2026-03-04
 
 ### Breaking Changes
