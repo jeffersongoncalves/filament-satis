@@ -1,5 +1,8 @@
 <?php
 
+use JeffersonGoncalves\LaravelSatis\Models\Package;
+use JeffersonGoncalves\LaravelSatis\Models\Token;
+
 it('loads filament-satis config file', function () {
     expect(config('filament-satis'))->toBeArray();
 });
@@ -21,6 +24,19 @@ it('has package_resource config with all keys', function () {
     expect($config['slug'])->toBe('satis/packages');
 });
 
+it('has credential_resource config with all keys', function () {
+    $config = config('filament-satis.credential_resource');
+
+    expect($config)->toBeArray()
+        ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
+
+    expect($config['cluster'])->toBeNull();
+    expect($config['should_register_navigation'])->toBeTrue();
+    expect($config['navigation_icon'])->toBe('heroicon-o-shield-check');
+    expect($config['navigation_sort'])->toBe(2);
+    expect($config['slug'])->toBe('satis/credentials');
+});
+
 it('has token_resource config with all keys', function () {
     $config = config('filament-satis.token_resource');
 
@@ -28,7 +44,7 @@ it('has token_resource config with all keys', function () {
         ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
 
     expect($config['navigation_icon'])->toBe('heroicon-o-key');
-    expect($config['navigation_sort'])->toBe(2);
+    expect($config['navigation_sort'])->toBe(3);
     expect($config['slug'])->toBe('satis/tokens');
 });
 
@@ -39,7 +55,7 @@ it('has package_release_resource config with all keys', function () {
         ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
 
     expect($config['navigation_icon'])->toBe('heroicon-o-tag');
-    expect($config['navigation_sort'])->toBe(3);
+    expect($config['navigation_sort'])->toBe(4);
     expect($config['slug'])->toBe('satis/package-releases');
 });
 
@@ -50,7 +66,7 @@ it('has package_download_resource config with all keys', function () {
         ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
 
     expect($config['navigation_icon'])->toBe('heroicon-o-arrow-down-tray');
-    expect($config['navigation_sort'])->toBe(4);
+    expect($config['navigation_sort'])->toBe(5);
     expect($config['slug'])->toBe('satis/package-downloads');
 });
 
@@ -61,7 +77,7 @@ it('has dependency_resource config with all keys', function () {
         ->toHaveKeys(['cluster', 'should_register_navigation', 'navigation_icon', 'navigation_sort', 'slug']);
 
     expect($config['navigation_icon'])->toBe('heroicon-o-link');
-    expect($config['navigation_sort'])->toBe(5);
+    expect($config['navigation_sort'])->toBe(6);
     expect($config['slug'])->toBe('satis/dependencies');
 });
 
@@ -73,6 +89,6 @@ it('satis has default models configured', function () {
     $models = config('satis.models');
 
     expect($models)->toBeArray()
-        ->and($models['package'])->toBe(\JeffersonGoncalves\LaravelSatis\Models\Package::class)
-        ->and($models['token'])->toBe(\JeffersonGoncalves\LaravelSatis\Models\Token::class);
+        ->and($models['package'])->toBe(Package::class)
+        ->and($models['token'])->toBe(Token::class);
 });

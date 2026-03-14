@@ -28,6 +28,11 @@ class PackagesTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('credential.name')
+                    ->label(__('filament-satis::package.table.credential'))
+                    ->searchable()
+                    ->sortable(),
+
                 IconColumn::make('is_dev')
                     ->label(__('filament-satis::package.fields.is_dev'))
                     ->boolean()
@@ -47,12 +52,6 @@ class PackagesTable
                     ->label(__('filament-satis::package.fields.type'))
                     ->badge()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('url')
-                    ->label(__('filament-satis::package.fields.url'))
-                    ->limit(50)
-                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')

@@ -17,10 +17,7 @@ return [
     'fields' => [
         'name' => 'Name',
         'type' => 'Type',
-        'url' => 'URL',
         'is_dev' => 'Dev Package',
-        'username' => 'Username',
-        'password' => 'Password',
         'webhook_secret' => 'Webhook Secret',
         'reference' => 'Reference',
         'is_credentials_validated' => 'Validated',
@@ -30,6 +27,8 @@ return [
     'infolist' => [
         'composer_command' => 'Composer Command',
         'webhook_url' => 'Webhook URL',
+        'credential' => 'Credential',
+        'credential_url' => 'Credential URL',
     ],
 
     'copy_message' => [
@@ -39,28 +38,21 @@ return [
     ],
 
     'form' => [
-        'url' => [
-            'composer' => 'Repository URL',
-            'github' => 'SSH URL',
-        ],
-        'username' => [
-            'composer' => 'Username',
-            'github' => 'GitHub Username',
-        ],
-        'password' => [
-            'composer' => 'Password',
-            'github' => 'Personal Access Token (PAT)',
-        ],
+        'credential' => 'Credential',
+    ],
+
+    'table' => [
+        'credential' => 'Credential',
     ],
 
     'instructions' => [
         'composer' => [
             'label' => 'Instructions',
-            'content' => 'Enter the Composer repository URL and authentication credentials.',
+            'content' => 'Enter the package name in vendor/package format.',
         ],
         'github' => [
             'label' => 'Instructions',
-            'content' => 'Use the SSH URL (git@github.com:user/repo.git) and a Personal Access Token (PAT) starting with github_pat_.',
+            'content' => 'Enter the repository name in owner/repo format.',
         ],
     ],
 

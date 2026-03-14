@@ -29,7 +29,7 @@ class TokenResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-satis.token_resource.navigation_sort', 2);
+        return config('filament-satis.token_resource.navigation_sort', 3);
     }
 
     public static function getNavigationGroup(): ?string
