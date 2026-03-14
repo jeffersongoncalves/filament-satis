@@ -15,7 +15,7 @@ it('reads navigation icon from config', function () {
 });
 
 it('reads navigation sort from config', function () {
-    expect(PackageDownloadResource::getNavigationSort())->toBe(4);
+    expect(PackageDownloadResource::getNavigationSort())->toBe(5);
 });
 
 it('reads slug from config', function () {

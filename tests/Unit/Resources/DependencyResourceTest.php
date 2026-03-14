@@ -15,7 +15,7 @@ it('reads navigation icon from config', function () {
 });
 
 it('reads navigation sort from config', function () {
-    expect(DependencyResource::getNavigationSort())->toBe(5);
+    expect(DependencyResource::getNavigationSort())->toBe(6);
 
     config(['filament-satis.dependency_resource.navigation_sort' => 99]);
     expect(DependencyResource::getNavigationSort())->toBe(99);

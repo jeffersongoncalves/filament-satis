@@ -26,7 +26,7 @@ class DependencyResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-satis.dependency_resource.navigation_sort', 5);
+        return config('filament-satis.dependency_resource.navigation_sort', 6);
     }
 
     public static function getNavigationGroup(): ?string

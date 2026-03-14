@@ -17,15 +17,18 @@ return [
     'fields' => [
         'name' => 'Nome',
         'type' => 'Tipo',
-        'url' => 'URL',
-        'username' => 'Usuário',
-        'password' => 'Senha',
+        'credential' => 'Credencial',
+        'credential_url' => 'URL da Credencial',
         'webhook_secret' => 'Webhook Secret',
         'reference' => 'Referência',
         'is_credentials_validated' => 'Validado',
         'credentials_validated_at' => 'Validado em',
         'is_dev' => 'Desenvolvimento',
         'releases_count' => 'Releases',
+    ],
+
+    'table' => [
+        'credential' => 'Credencial',
     ],
 
     'infolist' => [
@@ -39,29 +42,14 @@ return [
         'webhook_secret' => 'Webhook secret copiado com sucesso!',
     ],
 
-    'form' => [
-        'url' => [
-            'composer' => 'URL do Repositório',
-            'github' => 'URL SSH',
-        ],
-        'username' => [
-            'composer' => 'Usuário',
-            'github' => 'Usuário GitHub',
-        ],
-        'password' => [
-            'composer' => 'Senha',
-            'github' => 'Personal Access Token (PAT)',
-        ],
-    ],
-
     'instructions' => [
         'composer' => [
             'label' => 'Instruções',
-            'content' => 'Informe a URL do repositório Composer e as credenciais de autenticação.',
+            'content' => 'Selecione uma credencial para autenticar com o repositório.',
         ],
         'github' => [
             'label' => 'Instruções',
-            'content' => 'Use a URL SSH (git@github.com:user/repo.git) e um Personal Access Token (PAT) iniciando com github_pat_.',
+            'content' => 'Selecione uma credencial para autenticar com o GitHub.',
         ],
     ],
 

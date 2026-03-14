@@ -26,6 +26,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Credential Resource
+    |--------------------------------------------------------------------------
+    */
+    'credential_resource' => [
+        'cluster' => null,
+        'should_register_navigation' => true,
+        'navigation_icon' => 'heroicon-o-shield-check',
+        'navigation_sort' => 2,
+        'slug' => 'satis/credentials',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Token Resource
     |--------------------------------------------------------------------------
     */
@@ -33,7 +46,7 @@ return [
         'cluster' => null,
         'should_register_navigation' => true,
         'navigation_icon' => 'heroicon-o-key',
-        'navigation_sort' => 2,
+        'navigation_sort' => 3,
         'slug' => 'satis/tokens',
     ],
 
@@ -46,7 +59,7 @@ return [
         'cluster' => null,
         'should_register_navigation' => true,
         'navigation_icon' => 'heroicon-o-tag',
-        'navigation_sort' => 3,
+        'navigation_sort' => 4,
         'slug' => 'satis/package-releases',
     ],
 
@@ -59,7 +72,7 @@ return [
         'cluster' => null,
         'should_register_navigation' => true,
         'navigation_icon' => 'heroicon-o-arrow-down-tray',
-        'navigation_sort' => 4,
+        'navigation_sort' => 5,
         'slug' => 'satis/package-downloads',
     ],
 
@@ -72,7 +85,7 @@ return [
         'cluster' => null,
         'should_register_navigation' => true,
         'navigation_icon' => 'heroicon-o-link',
-        'navigation_sort' => 5,
+        'navigation_sort' => 6,
         'slug' => 'satis/dependencies',
     ],
 ];

@@ -24,7 +24,7 @@ class PackageReleaseResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-satis.package_release_resource.navigation_sort', 3);
+        return config('filament-satis.package_release_resource.navigation_sort', 4);
     }
 
     public static function getNavigationGroup(): ?string

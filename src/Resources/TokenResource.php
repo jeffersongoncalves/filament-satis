@@ -9,6 +9,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use JeffersonGoncalves\FilamentSatis\Resources\TokenResource\Pages;
 use JeffersonGoncalves\LaravelSatis\Support\ModelResolver;
 
@@ -26,7 +27,7 @@ class TokenResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-satis.token_resource.navigation_sort', 2);
+        return config('filament-satis.token_resource.navigation_sort', 3);
     }
 
     public static function getNavigationGroup(): ?string
@@ -83,7 +84,7 @@ class TokenResource extends Resource
                     ->relationship(
                         'packages',
                         'name',
-                        fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('is_credentials_validated', true)->orderBy('name')
+                        fn (Builder $query) => $query->where('is_credentials_validated', true)->orderBy('name')
                     )
                     ->multiple()
                     ->preload()
