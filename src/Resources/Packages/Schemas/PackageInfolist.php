@@ -25,8 +25,11 @@ class PackageInfolist
                         TextEntry::make('type')
                             ->label(__('filament-satis::package.fields.type'))
                             ->columnSpanFull(),
-                        TextEntry::make('url')
-                            ->label(__('filament-satis::package.fields.url'))
+                        TextEntry::make('credential.name')
+                            ->label(__('filament-satis::package.infolist.credential'))
+                            ->columnSpanFull(),
+                        TextEntry::make('credential.url')
+                            ->label(__('filament-satis::package.infolist.credential_url'))
                             ->columnSpanFull(),
                         IconEntry::make('is_dev')
                             ->label(__('filament-satis::package.fields.is_dev'))

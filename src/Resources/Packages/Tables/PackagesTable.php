@@ -49,11 +49,10 @@ class PackagesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('url')
-                    ->label(__('filament-satis::package.fields.url'))
-                    ->limit(50)
+                TextColumn::make('credential.name')
+                    ->label(__('filament-satis::package.table.credential'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label(__('filament-satis::general.created_at'))

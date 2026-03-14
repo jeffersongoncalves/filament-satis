@@ -3,6 +3,7 @@
 namespace JeffersonGoncalves\FilamentSatis\Resources\Packages\Schemas;
 
 use Closure;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
@@ -67,6 +68,33 @@ class PackageForm
                     ->required()
                     ->disabled(fn ($context) => $context === 'edit'),
 
+                Select::make('credential_id')
+                    ->label(__('filament-satis::package.form.credential'))
+                    ->relationship('credential', 'name')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->name} ({$record->email})")
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        TextInput::make('name')
+                            ->label(__('filament-satis::credential.form.name'))
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('url')
+                            ->label(__('filament-satis::credential.form.url'))
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->label(__('filament-satis::credential.form.email'))
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('password')
+                            ->label(__('filament-satis::credential.form.password'))
+                            ->password()
+                            ->revealable()
+                            ->required(),
+                    ]),
+
                 Fieldset::make()
                     ->columns()
                     ->schema([
@@ -79,63 +107,6 @@ class PackageForm
                             ->state(fn () => __('filament-satis::package.instructions.github.content'))
                             ->visible(fn (Get $get): bool => enum_equals($get('type'), PackageType::Github))
                             ->columnSpanFull(),
-
-                        TextInput::make('url')
-                            ->label(
-                                fn (Get $get) => match (PackageType::of($get('type'))) {
-                                    PackageType::Composer => __('filament-satis::package.form.url.composer'),
-                                    PackageType::Github => __('filament-satis::package.form.url.github'),
-                                }
-                            )
-                            ->rule(
-                                fn (Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
-                                    if (! enum_equals($get('type'), PackageType::Github)) {
-                                        return filter_var($value, FILTER_VALIDATE_URL);
-                                    }
-
-                                    if (preg_match('/^git@github.com:/', $value)) {
-                                        return;
-                                    }
-
-                                    $fail(__('filament-satis::package.validation.github_url'));
-                                },
-                            )
-                            ->required()
-                            ->columnSpanFull(),
-
-                        TextInput::make('username')
-                            ->label(
-                                fn (Get $get) => match (PackageType::of($get('type'))) {
-                                    PackageType::Composer => __('filament-satis::package.form.username.composer'),
-                                    PackageType::Github => __('filament-satis::package.form.username.github'),
-                                }
-                            )
-                            ->required(),
-
-                        TextInput::make('password')
-                            ->label(
-                                fn (Get $get) => match (PackageType::of($get('type'))) {
-                                    PackageType::Composer => __('filament-satis::package.form.password.composer'),
-                                    PackageType::Github => __('filament-satis::package.form.password.github'),
-                                }
-                            )
-                            ->password()
-                            ->revealable()
-                            ->rule(
-                                fn (Get $get): Closure => function (string $attribute, string $value, Closure $fail) use ($get) {
-                                    if (! enum_equals($get('type'), PackageType::Github)) {
-                                        return;
-                                    }
-
-                                    if (preg_match('/^github_pat_/', $value)) {
-                                        return;
-                                    }
-
-                                    $fail(__('filament-satis::package.validation.github_token'));
-                                },
-                            )
-                            ->required(fn (string $context): bool => $context === 'create')
-                            ->dehydrated(fn ($state) => filled($state)),
                     ]),
             ]);
     }

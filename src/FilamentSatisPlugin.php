@@ -4,6 +4,7 @@ namespace JeffersonGoncalves\FilamentSatis;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use JeffersonGoncalves\FilamentSatis\Resources\Credentials\CredentialResource;
 use JeffersonGoncalves\FilamentSatis\Resources\Dependencies\DependencyResource;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageDownloads\PackageDownloadResource;
 use JeffersonGoncalves\FilamentSatis\Resources\PackageReleases\PackageReleaseResource;
@@ -73,6 +74,7 @@ class FilamentSatisPlugin implements Plugin
 
         $panel->resources([
             PackageResource::class,
+            CredentialResource::class,
             TokenResource::class,
             PackageReleaseResource::class,
             PackageDownloadResource::class,

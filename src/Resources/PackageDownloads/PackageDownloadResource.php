@@ -26,7 +26,7 @@ class PackageDownloadResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-satis.package_download_resource.navigation_sort', 4);
+        return config('filament-satis.package_download_resource.navigation_sort', 5);
     }
 
     public static function getNavigationGroup(): ?string
