@@ -1,6 +1,6 @@
 <div class="filament-hidden">
 
-![Filament Satis](https://raw.githubusercontent.com/jeffersongoncalves/filament-satis/3.x/art/jeffersongoncalves-filament-satis.jpg)
+![Filament Satis](https://raw.githubusercontent.com/jeffersongoncalves/filament-satis/3.x/art/jeffersongoncalves-filament-satis.png)
 
 </div>
 
