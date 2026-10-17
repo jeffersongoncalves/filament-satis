@@ -10,11 +10,13 @@ use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JeffersonGoncalves\FilamentSatis\FilamentSatisServiceProvider;
 use JeffersonGoncalves\LaravelSatis\LaravelSatisServiceProvider;
+use JeffersonGoncalves\PestPluginDatabaseMigrations\LoadsPackageMigrations;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    use LoadsPackageMigrations;
     use RefreshDatabase;
 
     protected function getPackageProviders($app): array
@@ -49,17 +51,6 @@ abstract class TestCase extends BaseTestCase
 
     protected function defineDatabaseMigrations(): void
     {
-        $migrationsPath = __DIR__.'/../vendor/jeffersongoncalves/laravel-satis/database/migrations';
-
-        if (is_dir($migrationsPath)) {
-            foreach (glob($migrationsPath.'/*.php.stub') as $stub) {
-                $migrationPath = str_replace('.php.stub', '.php', $stub);
-                if (! file_exists($migrationPath)) {
-                    copy($stub, $migrationPath);
-                }
-            }
-
-            $this->loadMigrationsFrom($migrationsPath);
-        }
+        $this->loadPackageMigrations(LaravelSatisServiceProvider::class);
     }
 }
